@@ -1,0 +1,30 @@
+<ItemTemplateList>
+	<ItemTemplate>
+		<itemTemplateId>1</itemTemplateId>
+		<itemTemplateTypeId>1</itemTemplateTypeId>
+		<nameToken>Fire Ghost #1</nameToken>
+		<descriptionToken>Fire Ghost #1 description</descriptionToken>
+		<ghostTypeId>1</ghostTypeId>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>2</itemTemplateId>
+		<itemTemplateTypeId>1</itemTemplateTypeId>
+		<nameToken>Fire Ghost #2</nameToken>
+		<descriptionToken>Fire Ghost #2 description</descriptionToken>
+		<ghostTypeId>1</ghostTypeId>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>3</itemTemplateId>
+		<itemTemplateTypeId>1</itemTemplateTypeId>
+		<nameToken>Ice Ghost #1</nameToken>
+		<descriptionToken>Ice Ghost #1 description</descriptionToken>
+		<ghostTypeId>2</ghostTypeId>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>4</itemTemplateId>
+		<itemTemplateTypeId>1</itemTemplateTypeId>
+		<nameToken>Ice Ghost #2</nameToken>
+		<descriptionToken>Ice Ghost #2 description</descriptionToken>
+		<ghostTypeId>2</ghostTypeId>
+	</ItemTemplate>
+</ItemTemplateList>
