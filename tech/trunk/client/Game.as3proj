@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\Ghosties.swf" />
+    <movie path="bin\Game.swf" />
     <movie fps="30" />
     <movie width="720" />
     <movie height="640" />

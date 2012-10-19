@@ -39,7 +39,7 @@ package com.funcom.prelauncher.main
 		//Configuration
 		private const PRELAUNCHER_ASSET_PATH:String = "asset/prelauncher/Prelauncher.swf";
 		private const PRELAUNCHER_ASSET_LINKAGE:String = "PrelauncherAsset";
-		private const GAME_PATH:String = "Ghosties.swf";
+		private const GAME_PATH:String = "Game.swf";
 		
 		private const UPDATING_PERCENT_SPEED:int = 1; //ms
 		private const WAITING_TIME_AFTER_FULLY_LOADED:int = 250;//ms
