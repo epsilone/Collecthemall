@@ -12,6 +12,7 @@ package com.funcom.project.service.implementation.inventory.event
 		/*	Const var																					*/
 		/************************************************************************************************/
 		public static const ON_ITEM_TEMPLATE_LOADED:String = "InventoryServiceEvent::ON_ITEM_TEMPLATE_LOADED";
+		public static const ON_GET_INVENOTRY:String = "InventoryServiceEvent::ON_GET_INVENOTRY";
 		
 		/************************************************************************************************/
 		/*	Member var																					*/

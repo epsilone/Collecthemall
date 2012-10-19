@@ -4,45 +4,56 @@
  */
 package com.funcom.project.service.implementation.inventory.enum 
 {
-	import com.funcom.project.manager.implementation.console.enum.ELogType;
-	import com.funcom.project.manager.implementation.console.Logger;
-	import com.funcom.project.service.implementation.inventory.struct.template.GhostTemplate;
-	
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.BookItemTemplate;
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.CardItemTemplate;
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.CardPackItemTemplate;
+	import flash.utils.ByteArray;
 	public class EItemTemplateType 
 	{
-		private static var _instanceList:Vector.<EItemTemplateType> = new Vector.<EItemTemplateType>();
+		private static var m_referenceList:Vector.<EItemTemplateType> = new Vector.<EItemTemplateType>();
 		
-		private var _id:int; 
-		private var _name:String; 
-		private var _templateClass:Class;
+		public static const CARD_TEMPLATE_TYPE:EItemTemplateType 	= new EItemTemplateType(1, "CARD", CardItemTemplate);
+		public static const BOOK_TEMPLATE_TYPE:EItemTemplateType 	= new EItemTemplateType(2, "BOOK", BookItemTemplate);
+		public static const CARD_PACK_TEMPLATE_TYPE:EItemTemplateType 	= new EItemTemplateType(3, "CARD PACK", CardPackItemTemplate);
+		public static const UNKNOWN_TEMPLATE_TYPE:EItemTemplateType 	= new EItemTemplateType(-1, "UNKNOWN", null);
 		
-		public static const GHOST:EItemTemplateType 	= new EItemTemplateType(1, "Ghost", GhostTemplate);
+		private var _id:int;
+		private var _type:String;
+		private var _itemTemplateClass:Class;
 		
-		public function EItemTemplateType(aId:int, aClassName:String, aTemplateClass:Class)
+		public function EItemTemplateType(aId:int, aType:String, aItemTemplateClass:Class) 
 		{
 			_id = aId;
-			_name = aClassName;
-			_templateClass = aTemplateClass;
-			_instanceList.push(this);
+			_type = aType;
+			_itemTemplateClass = aItemTemplateClass;
+			
+			if (!m_referenceList)
+			{
+				m_referenceList = new Vector.<EItemTemplateType>();
+			}
+			
+			m_referenceList.push(this);
 		}
 		
-		public static function getItemTemplateTypeById(aId:int):EItemTemplateType
+		public static function getItemTemplateTypeById(id:int):EItemTemplateType
 		{
-			for each (var itemTemplateType:EItemTemplateType in _instanceList) 
+			for each (var itemTemplateType:EItemTemplateType in m_referenceList) 
 			{
-				if (itemTemplateType.id == aId)
+				if (itemTemplateType.id == id)
 				{
 					return itemTemplateType;
 				}
 			}
 			
-			Logger.log(ELogType.WARNING, "EItemTemplateType.as", "getTypeById", "Can't find an item type for id " + aId);
 			return null;
 		}
 		
-		static public function getList():Vector.<EItemTemplateType> 
+		public static function getList():Array
 		{
-			return _instanceList.slice();
+			var byteArray:ByteArray = new ByteArray();
+			byteArray.writeObject(m_referenceList);
+			byteArray.position = 0;
+			return byteArray.readObject() as Array;
 		}
 		
 		public function get id():int 
@@ -50,14 +61,14 @@ package com.funcom.project.service.implementation.inventory.enum
 			return _id;
 		}
 		
-		public function get name():String 
+		public function get type():String 
 		{
-			return _name;
+			return _type;
 		}
 		
-		public function get templateClass():Class 
+		public function get itemTemplateClass():Class 
 		{
-			return _templateClass;
+			return _itemTemplateClass;
 		}
 	}
 }

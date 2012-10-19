@@ -62,7 +62,7 @@ package com.funcom.project.main
 			_initStepController.addStep(5, getNeededGameManager, null, [4]);
 			_initStepController.addStep(6, startUpdateManager, null, [5]);
 			_initStepController.addStep(7, openHudModule, null, [6]);
-			_initStepController.addStep(8, openWorldMapModule, null, [6]);
+			_initStepController.addStep(8, openBookSelectionModule, null, [6]);
 			_initStepController.addStep(9, openDebugModule, null, [6]);
 			
 			Listener.add(StepControllerEvent.ON_STEP_COMPLETED, _initStepController as IEventDispatcher, onInitStepCompleted);
@@ -160,17 +160,17 @@ package com.funcom.project.main
 		}
 		/*************************************************************/
 		
-		private function openWorldMapModule():void 
+		private function openBookSelectionModule():void 
 		{
-			Listener.add(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onWorldMapModuleOpened);
-			_moduleManager.launchModule(EModuleDefinition.WORLD_MAP);
+			Listener.add(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onBookSelectionModuleOpened);
+			_moduleManager.launchModule(EModuleDefinition.BOOK_SELECTION);
 		}
 		
-		private function onWorldMapModuleOpened(aEvent:ModuleManagerEvent):void 
+		private function onBookSelectionModuleOpened(aEvent:ModuleManagerEvent):void 
 		{
-			if (aEvent.moduleDefinition == EModuleDefinition.WORLD_MAP)
+			if (aEvent.moduleDefinition == EModuleDefinition.BOOK_SELECTION)
 			{
-				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onWorldMapModuleOpened);
+				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onBookSelectionModuleOpened);
 				_initStepController.stepCompleted(8);
 			}
 		}
@@ -183,7 +183,7 @@ package com.funcom.project.main
 		
 		private function onDebugModuleOpened(aEvent:ModuleManagerEvent):void 
 		{
-			if (aEvent.moduleDefinition == EModuleDefinition.WORLD_MAP)
+			if (aEvent.moduleDefinition == EModuleDefinition.DEBUG)
 			{
 				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onDebugModuleOpened);
 				_initStepController.stepCompleted(9);

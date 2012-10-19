@@ -4,19 +4,9 @@
 */
 package com.funcom.project.module.hud
 {
-	import com.funcom.project.manager.enum.EManagerDefinition;
-	import com.funcom.project.manager.implementation.console.enum.ELogType;
-	import com.funcom.project.manager.implementation.console.Logger;
 	import com.funcom.project.manager.implementation.layer.enum.ELayerDefinition;
-	import com.funcom.project.manager.implementation.module.enum.EModuleDefinition;
-	import com.funcom.project.manager.implementation.module.IModuleManager;
 	import com.funcom.project.manager.implementation.module.struct.AbstractModule;
-	import com.funcom.project.manager.implementation.transition.enum.ETransitionDefinition;
-	import com.funcom.project.manager.ManagerA;
-	import com.funcom.project.utils.event.Listener;
 	import flash.display.MovieClip;
-	import flash.events.IEventDispatcher;
-	import flash.events.MouseEvent;
 	
 	public class HudModule extends AbstractModule
 	{
@@ -110,14 +100,7 @@ package com.funcom.project.module.hud
 		
 		override protected function registerEventListener():void 
 		{
-			Listener.add(MouseEvent.CLICK, _friendbar["WorldBtn"] as IEventDispatcher, onWorldButtonClicked);
-			
 			super.registerEventListener();
-		}
-		
-		private function onWorldButtonClicked(aEvent:MouseEvent):void 
-		{
-			(ManagerA.getManager(EManagerDefinition.MODULE_MANAGER) as IModuleManager).launchModule(EModuleDefinition.WORLD_MAP, null, ETransitionDefinition.PROCESSING);
 		}
 		
 		/************************************************************************************************************

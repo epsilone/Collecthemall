@@ -4,13 +4,16 @@
  */
 package com.funcom.project.service.implementation.inventory 
 {
+	import com.funcom.project.manager.implementation.console.enum.ELogType;
+	import com.funcom.project.manager.implementation.console.Logger;
 	import com.funcom.project.manager.implementation.loader.enum.EFileType;
 	import com.funcom.project.manager.implementation.loader.struct.LoadPacket;
 	import com.funcom.project.service.AbstractService;
 	import com.funcom.project.service.implementation.inventory.enum.EItemTemplateType;
 	import com.funcom.project.service.implementation.inventory.event.InventoryServiceEvent;
-	import com.funcom.project.service.implementation.inventory.struct.template.ItemTemplate;
-	import com.funcom.project.service.implementation.time.struct.Location;
+	import com.funcom.project.service.implementation.inventory.struct.item.CardItem;
+	import com.funcom.project.service.implementation.inventory.struct.item.Item;
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
 	import flash.utils.Dictionary;
 	
 	public class InventoryService extends AbstractService implements IInventoryService 
@@ -49,9 +52,20 @@ package com.funcom.project.service.implementation.inventory
 		/************************************************************************************************************
 		* Request Methodes																							*
 		************************************************************************************************************/
-		public function requestItemTemplate():void
+		public function loadItemTemplate():void
 		{
-			loaderManager.load(ITEM_TEMPLATE_PATH, EFileType.AUTO_FILE, onRequestItemTemplate);
+			loaderManager.load(ITEM_TEMPLATE_PATH, EFileType.AUTO_FILE, onItemTemplateLoaded);
+		}
+		
+		public function getInventory():void
+		{
+			Logger.log(ELogType.TODO, "InventoryService", "getInventory()", "Need to be implement with server communication.");
+			
+			var item:Item;
+			item = new CardItem(201, 1, 1);
+			_itemById[item.id] = item;
+			
+			onGetInventory();
 		}
 		
 		
@@ -72,6 +86,16 @@ package com.funcom.project.service.implementation.inventory
 			}
 			
 			return vector;
+		}
+		
+		public function getItemByItemId(aItemId:int):Item
+		{
+			return _itemById[aItemId];
+		}
+		
+		public function getItemListByItemTemplateId(aItemTemplateId:int):Vector.<ItemTemplate>
+		{
+			return _itemById[aItemId];
 		}
 		
 		/************************************************************************************************************
@@ -124,7 +148,12 @@ package com.funcom.project.service.implementation.inventory
 		/************************************************************************************************************
 		* Private Methods																							*
 		************************************************************************************************************/
-		private function onRequestItemTemplate(aLoadPacket:LoadPacket):void 
+		
+		
+		/************************************************************************************************************
+		* Handler Methods																							*
+		************************************************************************************************************/
+		private function onItemTemplateLoaded(aLoadPacket:LoadPacket):void 
 		{
 			//TODO: CLEAR OLD CACHE
 			XML.ignoreWhitespace = true;
@@ -139,17 +168,17 @@ package com.funcom.project.service.implementation.inventory
             {
 				itemTemplateTypeId = XML(itemTemplateListNodes[i])["itemTemplateTypeId"];
 				itemTemplateType = EItemTemplateType.getItemTemplateTypeById(itemTemplateTypeId);
-				itemTemplate = new itemTemplateType.templateClass(XML(itemTemplateListNodes[i]));
+				itemTemplate = new itemTemplateType.itemTemplateClass(XML(itemTemplateListNodes[i]));
 				addItemTemplate(itemTemplate);
             }
 			
 			dispatchEvent(new InventoryServiceEvent(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED));
 		}
 		
-		/************************************************************************************************************
-		* Handler Methods																							*
-		************************************************************************************************************/
-		
+		private function onGetInventory():void
+		{
+			dispatchEvent(new InventoryServiceEvent(InventoryServiceEvent.ON_GET_INVENOTRY));
+		}
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*
 		************************************************************************************************************/	

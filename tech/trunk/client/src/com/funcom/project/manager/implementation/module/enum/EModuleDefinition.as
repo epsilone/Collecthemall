@@ -8,11 +8,9 @@ package com.funcom.project.manager.implementation.module.enum
 	import com.funcom.project.manager.implementation.console.enum.ELogType;
 	import com.funcom.project.manager.implementation.console.Logger;
 	import com.funcom.project.manager.implementation.module.struct.AbstractModule;
-	import com.funcom.project.module.catchghost.CatchGhostModule;
+	import com.funcom.project.module.bookselection.BookSelectionModule;
 	import com.funcom.project.module.debug.DebugModule;
 	import com.funcom.project.module.hud.HudModule;
-	import com.funcom.project.module.islandmap.IslandMapModule;
-	import com.funcom.project.module.worldmap.WorldMapModule;
 	import flash.utils.ByteArray;
 	
 	public class EModuleDefinition 
@@ -30,9 +28,7 @@ package com.funcom.project.manager.implementation.module.enum
 		//[SCRIPT_HOOK::MODULE_DEFINITION]
 		public static const HUD:EModuleDefinition = new EModuleDefinition("Hud", HudModule, "asset/module/HudModule.swf", EModuleType.STAND_ALONE, true);
 		public static const DEBUG:EModuleDefinition = new EModuleDefinition("Debug", DebugModule, "asset/module/DebugModule.swf", EModuleType.STAND_ALONE, true);
-		public static const WORLD_MAP:EModuleDefinition = new EModuleDefinition("World Map", WorldMapModule, "asset/module/WorldMapModule.swf", EModuleType.SCREEN);
-		public static const ISLAND_MAP:EModuleDefinition = new EModuleDefinition("Island Map", IslandMapModule, "asset/module/IslandMapModule.swf", EModuleType.SCREEN);
-		public static const CATCH_GHOST:EModuleDefinition = new EModuleDefinition("Catch Ghost", CatchGhostModule, "asset/module/CatchGhostModule.swf", EModuleType.SCREEN);
+		public static const BOOK_SELECTION:EModuleDefinition = new EModuleDefinition("Book Selection", BookSelectionModule, "asset/module/BookSelectionModule.swf", EModuleType.SCREEN);
 		
 		
 		public function EModuleDefinition(aName:String, aInstanceClass:Class, aAssetFilePath:String, aModuleType:String, aRenderOnResize:Boolean = false) 

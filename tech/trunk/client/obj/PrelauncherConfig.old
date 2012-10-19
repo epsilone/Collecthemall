@@ -16,16 +16,16 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'9/14/2012'</value>
+      <value>'10/19/2012'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\kevenp\Desktop\10_septembre\programmation\trunk\client\src</path-element>
+      <path-element>C:\Users\kevenp\Documents\GitHub\Collecthemall\tech\trunk\client\src</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\kevenp\Desktop\10_septembre\programmation\trunk\client\src\com\funcom\prelauncher\main\Prelauncher.as</path-element>
+    <path-element>C:\Users\kevenp\Documents\GitHub\Collecthemall\tech\trunk\client\src\com\funcom\prelauncher\main\Prelauncher.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

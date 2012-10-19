@@ -48,7 +48,8 @@ package com.funcom.project.manager.implementation.inventory
 		override protected function populateInitStep():void 
 		{
 			super.populateInitStep();
-			_initStepController.addStep(requestItemTemplate);
+			_initStepController.addStep(loadItemTemplate);
+			_initStepController.addStep(getInventory);
 		}
 		
 		override protected function init():void 
@@ -58,18 +59,30 @@ package com.funcom.project.manager.implementation.inventory
 			super.init();
 		}
 		
-		private function requestItemTemplate():void 
+		private function loadItemTemplate():void 
 		{
-			Listener.add(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onRequestItemTemplate);
-			_inventoryService.requestItemTemplate();
+			Listener.add(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
+			_inventoryService.loadItemTemplate();
+		}
+		
+		private function getInventory():void 
+		{
+			Listener.add(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onGetInventory);
+			_inventoryService.getInventory();
 		}
 		
 		/************************************************************************************************************
 		* Handler Methods																							*
 		************************************************************************************************************/
-		private function onRequestItemTemplate(aEvent:InventoryServiceEvent):void 
+		private function onItemTemplateLoaded(aEvent:InventoryServiceEvent):void 
 		{
-			Listener.remove(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onRequestItemTemplate);
+			Listener.remove(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
+			_initStepController.stepCompleted();
+		}
+		
+		private function onGetInventory(aEvent:InventoryServiceEvent):void 
+		{
+			Listener.remove(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onItemTemplateLoaded);
 			_initStepController.stepCompleted();
 		}
 		

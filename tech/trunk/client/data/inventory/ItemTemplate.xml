@@ -1,30 +1,41 @@
 <ItemTemplateList>
+	<!-- Card -->
 	<ItemTemplate>
 		<itemTemplateId>1</itemTemplateId>
 		<itemTemplateTypeId>1</itemTemplateTypeId>
-		<nameToken>Fire Ghost #1</nameToken>
-		<descriptionToken>Fire Ghost #1 description</descriptionToken>
-		<ghostTypeId>1</ghostTypeId>
+		<nameToken>Card #1</nameToken>
+		<descriptionToken>Card #1 description</descriptionToken>
+		<assetPath>asset/item/normal/card/Card_1.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/card/Card_1.swf</assetThumbnailPath>
+		<cardCategoryTypeId>1</cardCategoryTypeId>
 	</ItemTemplate>
 	<ItemTemplate>
 		<itemTemplateId>2</itemTemplateId>
 		<itemTemplateTypeId>1</itemTemplateTypeId>
-		<nameToken>Fire Ghost #2</nameToken>
-		<descriptionToken>Fire Ghost #2 description</descriptionToken>
-		<ghostTypeId>1</ghostTypeId>
+		<nameToken>Card #2</nameToken>
+		<descriptionToken>Card #2 description</descriptionToken>
+		<assetPath>asset/item/normal/card/Card_2.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/card/Card_2.swf</assetThumbnailPath>
+		<cardCategoryTypeId>1</cardCategoryTypeId>
 	</ItemTemplate>
+
+	<!-- Book -->
 	<ItemTemplate>
 		<itemTemplateId>3</itemTemplateId>
-		<itemTemplateTypeId>1</itemTemplateTypeId>
-		<nameToken>Ice Ghost #1</nameToken>
-		<descriptionToken>Ice Ghost #1 description</descriptionToken>
-		<ghostTypeId>2</ghostTypeId>
+		<itemTemplateTypeId>2</itemTemplateTypeId>
+		<nameToken>Book #1</nameToken>
+		<descriptionToken>Book #1 description</descriptionToken>
+		<assetPath>asset/item/normal/book/Book_1.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/book/Book_1.swf</assetThumbnailPath>
 	</ItemTemplate>
+
+	<!-- Card Pack -->
 	<ItemTemplate>
 		<itemTemplateId>4</itemTemplateId>
-		<itemTemplateTypeId>1</itemTemplateTypeId>
-		<nameToken>Ice Ghost #2</nameToken>
-		<descriptionToken>Ice Ghost #2 description</descriptionToken>
-		<ghostTypeId>2</ghostTypeId>
+		<itemTemplateTypeId>3</itemTemplateTypeId>
+		<nameToken>Card Pack #1</nameToken>
+		<descriptionToken>Card Pack #1 description</descriptionToken>
+		<assetPath>asset/item/normal/cardpack/CardPack_1.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/cardpack/CardPack_1.swf</assetThumbnailPath>
 	</ItemTemplate>
 </ItemTemplateList>

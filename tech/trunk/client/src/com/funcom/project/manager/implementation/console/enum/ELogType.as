@@ -18,6 +18,7 @@ package com.funcom.project.manager.implementation.console.enum
 		public static const DEBUG:ELogType 		= new ELogType("Debug", "[DEBUG]", "DebugIcon_LogType");
 		public static const INFO:ELogType 		= new ELogType("Info", "[INFO]", "InfoIcon_LogType");
 		public static const TIME:ELogType 		= new ELogType("Time", "[TIME]", "TimeIcon_LogType");
+		public static const TODO:ELogType 		= new ELogType("Todo", "[TODO]", "AdviceIcon_LogType");
 		
 		private static var m_logTypeList:Array;/*com.funcom.social.service.loader.enum.EFileType*/
 		
