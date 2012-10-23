@@ -13,7 +13,7 @@ package com.funcom.project.manager.implementation.loader
 	public interface ILoaderManager extends IEventDispatcher
 	{
 		function load(filePath:String, fileType:EFileType, callback:Function = null, applicationDomain:ApplicationDomain = null, loaderPriority:int = 1, avoidCaching:Boolean = false):LoadPacket;
-		function loadGroup(loadgroup:LoadGroup):void;
+		//function loadGroup(loadgroup:LoadGroup):void;
 		function hasFile(filePath:String):Boolean;
 		function getPacket(filePath:String):LoadPacket;
 		function getSWFStage(filePath:String):MovieClip;

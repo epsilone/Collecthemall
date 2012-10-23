@@ -4,9 +4,16 @@
 */
 package com.funcom.project.module.hud
 {
+	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.implementation.layer.enum.ELayerDefinition;
+	import com.funcom.project.manager.implementation.module.enum.EModuleDefinition;
+	import com.funcom.project.manager.implementation.module.IModuleManager;
 	import com.funcom.project.manager.implementation.module.struct.AbstractModule;
+	import com.funcom.project.manager.implementation.transition.enum.ETransitionDefinition;
+	import com.funcom.project.manager.ManagerA;
+	import com.funcom.project.utils.event.Listener;
 	import flash.display.MovieClip;
+	import flash.events.MouseEvent;
 	
 	public class HudModule extends AbstractModule
 	{
@@ -22,6 +29,7 @@ package com.funcom.project.module.hud
 		* Member Variables																							*
 		************************************************************************************************************/
 		//Visual ref
+		private var _bookSelectionBtn:MovieClip;
 		private var _avatarPicture:MovieClip;
 		private var _friendbar:MovieClip;
 		private var _progressbar:MovieClip;
@@ -37,6 +45,7 @@ package com.funcom.project.module.hud
 		override public function destroy():void 
 		{
 			//Release visual reference
+			_bookSelectionBtn = null;
 			_avatarPicture = null;
 			_friendbar = null;
 			_progressbar = null;
@@ -69,6 +78,8 @@ package com.funcom.project.module.hud
 			_friendbar = _loaderManager.getSymbol(_moduleDefinition.assetFilePath, "FriendBar_HudModule") as MovieClip;
 			_progressbar = _loaderManager.getSymbol(_moduleDefinition.assetFilePath, "Progressbar_HudModule") as MovieClip;
 			
+			_bookSelectionBtn = _friendbar["BookSelectionBtn"] as MovieClip;
+			
 			super.getvisualDefinition();
 		}
 		
@@ -100,12 +111,25 @@ package com.funcom.project.module.hud
 		
 		override protected function registerEventListener():void 
 		{
+			Listener.add(MouseEvent.CLICK, _bookSelectionBtn, onBookSelectionClicked);
+			
 			super.registerEventListener();
+		}
+		
+		override protected function unregisterEventListener():void 
+		{
+			Listener.remove(MouseEvent.CLICK, _bookSelectionBtn, onBookSelectionClicked);
+			
+			super.unregisterEventListener();
 		}
 		
 		/************************************************************************************************************
 		* Handler Methods																							*
 		************************************************************************************************************/
+		private function onBookSelectionClicked(aEvent:MouseEvent):void 
+		{
+			(ManagerA.getManager(EManagerDefinition.MODULE_MANAGER) as IModuleManager).launchModule(EModuleDefinition.BOOK_SELECTION, null, ETransitionDefinition.PROCESSING);
+		}
 		
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*

@@ -11,10 +11,11 @@ package com.funcom.project.service.implementation.inventory
 	import com.funcom.project.service.AbstractService;
 	import com.funcom.project.service.implementation.inventory.enum.EItemTemplateType;
 	import com.funcom.project.service.implementation.inventory.event.InventoryServiceEvent;
+	import com.funcom.project.service.implementation.inventory.struct.cache.InventoryCache;
+	import com.funcom.project.service.implementation.inventory.struct.item.BookItem;
 	import com.funcom.project.service.implementation.inventory.struct.item.CardItem;
 	import com.funcom.project.service.implementation.inventory.struct.item.Item;
 	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
-	import flash.utils.Dictionary;
 	
 	public class InventoryService extends AbstractService implements IInventoryService 
 	{
@@ -26,9 +27,7 @@ package com.funcom.project.service.implementation.inventory
 		* Member Variables																							*
 		************************************************************************************************************/
 		//Reference holder
-		private var _itemTemplateByItemTemplateId:Dictionary;
-		private var _itemTemplateListByItemTemplateTypeId:Dictionary;
-		private var _itemById:Dictionary;
+		private var _cache:InventoryCache;
 		
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
@@ -42,9 +41,7 @@ package com.funcom.project.service.implementation.inventory
 		{
 			super.initialize();
 			
-			_itemTemplateByItemTemplateId = new Dictionary();
-			_itemTemplateListByItemTemplateTypeId = new Dictionary();
-			_itemById = new Dictionary();
+			_cache = new InventoryCache();
 			
 			onInitialized();
 		}
@@ -62,100 +59,27 @@ package com.funcom.project.service.implementation.inventory
 			Logger.log(ELogType.TODO, "InventoryService", "getInventory()", "Need to be implement with server communication.");
 			
 			var item:Item;
+			
+			//Add 1 card
 			item = new CardItem(201, 1, 1);
-			_itemById[item.id] = item;
+			_cache.put(item);
+			
+			//Add 1 book
+			item = new BookItem(301, 3, 1);
+			_cache.put(item);
 			
 			onGetInventory();
-		}
-		
-		
-		/************************************************************************************************************
-		* Cache Accessor Methodes																					*
-		************************************************************************************************************/
-		public function getItemTemplateByItemTemplateId(aItemTemplateId:int):ItemTemplate
-		{
-			return _itemTemplateByItemTemplateId[aItemTemplateId];
-		}
-		
-		public function getItemTemplateListByItemTemplateTypeId(aItemTemplateTypeId:int):Vector.<ItemTemplate>
-		{
-			var vector:Vector.<ItemTemplate> = _itemTemplateListByItemTemplateTypeId[aItemTemplateTypeId];
-			if (vector == null)
-			{
-				vector = new Vector.<ItemTemplate>();
-			}
-			
-			return vector;
-		}
-		
-		public function getItemByItemId(aItemId:int):Item
-		{
-			return _itemById[aItemId];
-		}
-		
-		public function getItemListByItemTemplateId(aItemTemplateId:int):Vector.<ItemTemplate>
-		{
-			return _itemById[aItemId];
-		}
-		
-		/************************************************************************************************************
-		* Cache Management Methodes																					*
-		************************************************************************************************************/
-		private function addItemTemplate(itemTemplate:ItemTemplate):void
-		{
-			_itemTemplateByItemTemplateId[itemTemplate.itemTemplateId] = itemTemplate;
-			
-			var vector:Vector.<ItemTemplate> = _itemTemplateListByItemTemplateTypeId[itemTemplate.itemTemplateTypeId];
-			var index:int;
-			if (vector == null)
-			{
-				vector = new Vector.<ItemTemplate>();
-				_itemTemplateListByItemTemplateTypeId[itemTemplate.itemTemplateTypeId] = vector;
-				index = -1;
-			}
-			else
-			{
-				index = vector.indexOf(itemTemplate);
-			}
-			
-			if (index == -1)
-			{
-				vector.push(itemTemplate);
-			}
-			else
-			{
-				vector.splice(index, 1, itemTemplate);
-			}
-			
-		}
-		
-		private function removeItemTemplate(itemTemplate:ItemTemplate):void
-		{
-			delete _itemTemplateByItemTemplateId[itemTemplate.itemTemplateId];
-			
-			var vector:Vector.<ItemTemplate> = _itemTemplateListByItemTemplateTypeId[itemTemplate.itemTemplateTypeId];
-			var index:int;
-			if (vector)
-			{
-				index = vector.indexOf(itemTemplate);
-				if (index != -1)
-				{
-					vector.splice(index, 1);
-				}
-			}
 		}
 		
 		/************************************************************************************************************
 		* Private Methods																							*
 		************************************************************************************************************/
 		
-		
 		/************************************************************************************************************
 		* Handler Methods																							*
 		************************************************************************************************************/
 		private function onItemTemplateLoaded(aLoadPacket:LoadPacket):void 
 		{
-			//TODO: CLEAR OLD CACHE
 			XML.ignoreWhitespace = true;
 			var xmlData:XML = loaderManager.getXML(ITEM_TEMPLATE_PATH); 
 			var itemTemplateListNodes:XMLList = xmlData["ItemTemplate"];
@@ -169,7 +93,7 @@ package com.funcom.project.service.implementation.inventory
 				itemTemplateTypeId = XML(itemTemplateListNodes[i])["itemTemplateTypeId"];
 				itemTemplateType = EItemTemplateType.getItemTemplateTypeById(itemTemplateTypeId);
 				itemTemplate = new itemTemplateType.itemTemplateClass(XML(itemTemplateListNodes[i]));
-				addItemTemplate(itemTemplate);
+				_cache.put(itemTemplate);
             }
 			
 			dispatchEvent(new InventoryServiceEvent(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED));
@@ -182,6 +106,10 @@ package com.funcom.project.service.implementation.inventory
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*
 		************************************************************************************************************/	
+		public function get cache():InventoryCache 
+		{
+			return _cache;
+		}
 	}
 
 }

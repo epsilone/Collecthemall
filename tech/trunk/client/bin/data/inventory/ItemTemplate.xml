@@ -27,11 +27,55 @@
 		<descriptionToken>Book #1 description</descriptionToken>
 		<assetPath>asset/item/normal/book/Book_1.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/book/Book_1.swf</assetThumbnailPath>
+		<content>
+			<page bgAssetPath="asset/item/thumb/book/Book_1.swf">
+				<card templateId="1" xPos="100" yPos="100"/>
+				<card templateId="2" xPos="100" yPos="400"/>
+			</page>
+		</content>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>4</itemTemplateId>
+		<itemTemplateTypeId>2</itemTemplateTypeId>
+		<nameToken>Book #2</nameToken>
+		<descriptionToken>Book #2 description</descriptionToken>
+		<assetPath>asset/item/normal/book/Book_2.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/book/Book_2.swf</assetThumbnailPath>
+		<content>
+			<page bgAssetPath="asset/item/thumb/book/Book_2.swf">
+				<card templateId="1" xPos="100" yPos="100"/>
+			</page>
+		</content>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>5</itemTemplateId>
+		<itemTemplateTypeId>2</itemTemplateTypeId>
+		<nameToken>Book #3</nameToken>
+		<descriptionToken>Book #3 description</descriptionToken>
+		<assetPath>asset/item/normal/book/Book_3.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/book/Book_3.swf</assetThumbnailPath>
+		<content>
+			<page bgAssetPath="asset/item/thumb/book/Book_3.swf">
+				<card templateId="2" xPos="100" yPos="400"/>
+			</page>
+		</content>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>6</itemTemplateId>
+		<itemTemplateTypeId>2</itemTemplateTypeId>
+		<nameToken>Book #4</nameToken>
+		<descriptionToken>Book #4 description</descriptionToken>
+		<assetPath>asset/item/normal/book/Book_4.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/book/Book_4.swf</assetThumbnailPath>
+		<content>
+			<page bgAssetPath="asset/item/thumb/book/Book_4.swf">
+			</page>
+		</content>
 	</ItemTemplate>
 
 	<!-- Card Pack -->
 	<ItemTemplate>
-		<itemTemplateId>4</itemTemplateId>
+		<itemTemplateId>7</itemTemplateId>
 		<itemTemplateTypeId>3</itemTemplateTypeId>
 		<nameToken>Card Pack #1</nameToken>
 		<descriptionToken>Card Pack #1 description</descriptionToken>

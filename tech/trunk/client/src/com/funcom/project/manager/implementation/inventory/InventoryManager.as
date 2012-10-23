@@ -4,10 +4,11 @@ package com.funcom.project.manager.implementation.inventory
 	import com.funcom.project.service.enum.EServiceDefinition;
 	import com.funcom.project.service.implementation.inventory.event.InventoryServiceEvent;
 	import com.funcom.project.service.implementation.inventory.IInventoryService;
-	import com.funcom.project.service.implementation.time.ITimeService;
+	import com.funcom.project.service.implementation.inventory.struct.cache.ICacheObject;
+	import com.funcom.project.service.implementation.inventory.struct.item.Item;
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
 	import com.funcom.project.service.ServiceA;
 	import com.funcom.project.utils.event.Listener;
-	import com.funcom.project.utils.time.timekeeper.TimekeeperEvent;
 	
 	public class InventoryManager extends AbstractManager implements IInventoryManager
 	{
@@ -37,10 +38,41 @@ package com.funcom.project.manager.implementation.inventory
 		}
 		
 
-		/************************************************************************************************************
-		* Public Methods																							*
-		************************************************************************************************************/
+		/************************************************************************************************/
+		/*	Public (INPUT)																				*/
+		/************************************************************************************************/
+		public function put(aObject:ICacheObject):Boolean
+		{
+			return _inventoryService.cache.put(aObject);
+		}
 		
+		public function remove(aObject:ICacheObject):Boolean
+		{
+			return _inventoryService.cache.remove(aObject);
+		}
+		
+		/************************************************************************************************/
+		/*	Public (OUTPUT)																				*/
+		/************************************************************************************************/
+		public function getItemByItemId(aItemId:int):Item
+		{
+			return _inventoryService.cache.getItemByItemId(aItemId);
+		}
+		
+		public function getItemListByItemTemplateId(aItemTemplateId:int):Vector.<Item>
+		{
+			return _inventoryService.cache.getItemListByItemTemplateId(aItemTemplateId);
+		}
+		
+		public function getItemTemplateByItemTemplateId(aItemTemplateId:int):ItemTemplate
+		{
+			return _inventoryService.cache.getItemTemplateByItemTemplateId(aItemTemplateId);
+		}
+		
+		public function getItemTemplateListByItemTemplateTypeId(aItemTemplateTypeId:int):Vector.<ItemTemplate>
+		{
+			return _inventoryService.cache.getItemTemplateListByItemTemplateTypeId(aItemTemplateTypeId);
+		}
 		
 		/************************************************************************************************************
 		* Private Methods																							*

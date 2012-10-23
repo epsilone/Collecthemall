@@ -5,6 +5,7 @@
 
 package com.funcom.project.service.implementation.inventory.struct.itemtemplate 
 {
+	import com.funcom.project.service.implementation.inventory.struct.object.BookContent;
 	import flash.events.EventDispatcher;
 	
 	public class BookItemTemplate extends ItemTemplate
@@ -16,7 +17,7 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/************************************************************************************************/
 		/*	Member var																					*/
 		/************************************************************************************************/
-		//Data
+		private var _bookContent:BookContent;
 		
 		/************************************************************************************************/
 		/*	Constructor / Init / Dispose																*/
@@ -29,6 +30,8 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 			{
 				return;
 			}
+			
+			_bookContent = new BookContent(XML(aXmlNode.content));
 		}
 		
 		/************************************************************************************************/
@@ -46,5 +49,9 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/************************************************************************************************/
 		/*	Getter / Setter																				*/
 		/************************************************************************************************/
+		public function get bookContent():BookContent 
+		{
+			return _bookContent;
+		}
 	}
 }

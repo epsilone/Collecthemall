@@ -5,9 +5,10 @@
 
 package com.funcom.project.service.implementation.inventory.struct.itemtemplate 
 {
+	import com.funcom.project.service.implementation.inventory.struct.cache.ICacheObject;
 	import flash.events.EventDispatcher;
 	
-	public class ItemTemplate
+	public class ItemTemplate implements ICacheObject
 	{
 		/************************************************************************************************/
 		/*	Const var																					*/

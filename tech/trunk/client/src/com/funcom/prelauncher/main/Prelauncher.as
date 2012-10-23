@@ -4,6 +4,8 @@
  */
 package com.funcom.prelauncher.main
 {
+	import com.funcom.project.controller.step.event.StepControllerEvent;
+	import com.funcom.project.controller.step.StepController;
 	import com.funcom.project.main.IGame;
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.event.ManagerEvent;
@@ -15,8 +17,6 @@ package com.funcom.prelauncher.main
 	import com.funcom.project.manager.importation.PrelauncherManagerImport;
 	import com.funcom.project.manager.ManagerA;
 	import com.funcom.project.utils.event.Listener;
-	import com.funcom.project.utils.logic.step.event.StepControllerEvent;
-	import com.funcom.project.utils.logic.step.StepController;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;

@@ -1,5 +1,8 @@
 package com.funcom.project.main
 {
+	import com.funcom.project.controller.step.ConcurrentStepController;
+	import com.funcom.project.controller.step.event.StepControllerEvent;
+	import com.funcom.project.controller.step.StepController;
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.event.ManagerEvent;
 	import com.funcom.project.manager.implementation.layer.enum.ELayerDefinition;
@@ -17,9 +20,6 @@ package com.funcom.project.main
 	import com.funcom.project.service.importation.GameServiceImport;
 	import com.funcom.project.service.ServiceA;
 	import com.funcom.project.utils.event.Listener;
-	import com.funcom.project.utils.logic.step.ConcurrentStepController;
-	import com.funcom.project.utils.logic.step.event.StepControllerEvent;
-	import com.funcom.project.utils.logic.step.StepController;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;

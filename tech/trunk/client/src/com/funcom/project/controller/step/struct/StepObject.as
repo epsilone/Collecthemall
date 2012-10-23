@@ -1,10 +1,10 @@
 /**
 * @author Keven Poulin
 */
-package com.funcom.project.utils.logic.step.struct
+package com.funcom.project.controller.step.struct
 {
-	import com.funcom.project.utils.logic.step.enum.EStepState;
-	import com.funcom.project.utils.logic.step.event.StepControllerEvent;
+	import com.funcom.project.controller.step.enum.EStepState;
+	import com.funcom.project.controller.step.event.StepControllerEvent;
 	import flash.events.EventDispatcher;
 	
 	public class StepObject extends EventDispatcher

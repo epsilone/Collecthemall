@@ -8,6 +8,7 @@ package com.funcom.project.manager.implementation.module.enum
 	import com.funcom.project.manager.implementation.console.enum.ELogType;
 	import com.funcom.project.manager.implementation.console.Logger;
 	import com.funcom.project.manager.implementation.module.struct.AbstractModule;
+	import com.funcom.project.module.book.BookModule;
 	import com.funcom.project.module.bookselection.BookSelectionModule;
 	import com.funcom.project.module.debug.DebugModule;
 	import com.funcom.project.module.hud.HudModule;
@@ -28,7 +29,8 @@ package com.funcom.project.manager.implementation.module.enum
 		//[SCRIPT_HOOK::MODULE_DEFINITION]
 		public static const HUD:EModuleDefinition = new EModuleDefinition("Hud", HudModule, "asset/module/HudModule.swf", EModuleType.STAND_ALONE, true);
 		public static const DEBUG:EModuleDefinition = new EModuleDefinition("Debug", DebugModule, "asset/module/DebugModule.swf", EModuleType.STAND_ALONE, true);
-		public static const BOOK_SELECTION:EModuleDefinition = new EModuleDefinition("Book Selection", BookSelectionModule, "asset/module/BookSelectionModule.swf", EModuleType.SCREEN);
+		public static const BOOK_SELECTION:EModuleDefinition = new EModuleDefinition("Book Selection", BookSelectionModule, "asset/module/BookSelectionModule.swf", EModuleType.SCREEN, true);
+		public static const BOOK:EModuleDefinition = new EModuleDefinition("Book", BookModule, "asset/module/BookModule.swf", EModuleType.SCREEN, true);
 		
 		
 		public function EModuleDefinition(aName:String, aInstanceClass:Class, aAssetFilePath:String, aModuleType:String, aRenderOnResize:Boolean = false) 

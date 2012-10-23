@@ -9,6 +9,7 @@ package com.funcom.project.manager.implementation.loader.struct
 	import com.funcom.project.manager.implementation.loader.enum.ELoaderType;
 	import com.funcom.project.manager.implementation.loader.enum.ELoadPacketState;
 	import com.funcom.project.manager.implementation.loader.event.LoaderManagerEvent;
+	import com.funcom.project.utils.display.DisplayUtil;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
@@ -291,7 +292,7 @@ package com.funcom.project.manager.implementation.loader.struct
 				{
 					if (_currentPacket.content is DisplayObjectContainer)
 					{
-						//TODO DisplayUtil.recursiveStop(m_currentPacket.content as DisplayObjectContainer);
+						DisplayUtil.recursiveStop(_currentPacket.content as DisplayObjectContainer);
 					}
 					break;
 				}

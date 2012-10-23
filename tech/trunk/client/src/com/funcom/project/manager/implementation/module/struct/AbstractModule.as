@@ -4,6 +4,7 @@
  */
 package com.funcom.project.manager.implementation.module.struct 
 {
+	import com.funcom.project.controller.step.StepController;
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.implementation.console.enum.ELogType;
 	import com.funcom.project.manager.implementation.console.Logger;
@@ -21,7 +22,6 @@ package com.funcom.project.manager.implementation.module.struct
 	import com.funcom.project.utils.commoninterface.IDestroyable;
 	import com.funcom.project.utils.event.Listener;
 	import com.funcom.project.utils.flash.FlashUtil;
-	import com.funcom.project.utils.logic.step.StepController;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;

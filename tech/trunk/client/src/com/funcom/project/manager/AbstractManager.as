@@ -3,6 +3,7 @@
 */
 package com.funcom.project.manager
 {
+	import com.funcom.project.controller.step.StepController;
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.enum.EManagerState;
 	import com.funcom.project.manager.event.ManagerEvent;
@@ -13,7 +14,6 @@ package com.funcom.project.manager
 	import com.funcom.project.manager.implementation.loader.struct.LoadPacket;
 	import com.funcom.project.service.AbstractService;
 	import com.funcom.project.utils.flash.FlashUtil;
-	import com.funcom.project.utils.logic.step.StepController;
 	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.getTimer;

@@ -2,7 +2,7 @@
 * @author Keven Poulin
 * @compagny Funcom
 */
-package com.funcom.project.utils.logic.step.enum
+package com.funcom.project.controller.step.enum
 {
 	public class EStepState
 	{

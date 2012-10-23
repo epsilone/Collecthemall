@@ -4,6 +4,7 @@
 */
 package com.funcom.project.utils.display
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -12,12 +13,70 @@ package com.funcom.project.utils.display
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.filters.BitmapFilter;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
 
 	public class DisplayUtil
 	{
+		private static const PLAY:int = 0;
+		private static const STOP:int = 1;
+		
+		public static function snapClip(clip:DisplayObject):Bitmap
+		{
+			var bounds:Rectangle = clip.getBounds(clip);
+			var bitmapData:BitmapData = new BitmapData(int(bounds.width + 0.5), int(bounds.height + 0.5), true, 0);
+			bitmapData.draw(clip, new Matrix(1,0,0,1,-bounds.x,-bounds.y));
+			return new Bitmap(bitmapData, "auto", true);
+		}
+		
+		public static function recursivePlay(displayObjectContainer:DisplayObjectContainer):void
+		{
+			if (displayObjectContainer is MovieClip)
+			{
+				(displayObjectContainer as MovieClip).play();
+			}
+			
+			ProcessRecursively(displayObjectContainer, PLAY);
+		}
+		
+		public static function recursiveStop(displayObjectContainer:DisplayObjectContainer):void
+		{
+			if (displayObjectContainer is MovieClip)
+			{
+				(displayObjectContainer as MovieClip).stop();
+			}
+			
+			ProcessRecursively(displayObjectContainer, STOP);
+		}
+		
+		private static function ProcessRecursively(displayObjectContainer:DisplayObjectContainer, aAction:int):void
+		{
+			if(displayObjectContainer == null) { return; }
+			
+			var currentChild:DisplayObject;
+			var childCheck:int = 0;
+			
+			while (displayObjectContainer.numChildren > 0 && childCheck < displayObjectContainer.numChildren)
+			{
+				currentChild = displayObjectContainer.getChildAt(childCheck++);
+				
+				if (currentChild && currentChild is MovieClip)
+				{
+					if (aAction == STOP)
+						(currentChild as MovieClip).stop();
+					else if (aAction == PLAY)
+						(currentChild as MovieClip).play();
+				}
+				
+				if (currentChild is DisplayObjectContainer)
+				{
+					ProcessRecursively(currentChild as DisplayObjectContainer, aAction);
+				}
+			}
+		}
+		
 		public static function DisableInteractiveProperties(aTarget:DisplayObject):void
 		{
 			if (aTarget is MovieClip)
@@ -199,7 +258,6 @@ package com.funcom.project.utils.display
 		
 		public static function TraceDisplayList(aTarget:DisplayObjectContainer, aLevel:int = 0):void
 		{
-			//TODO : Externalize this when we have someplace to externalize to
 			var tabbing:String = "";
 			var d:DisplayObjectContainer;
 			var len:int = aTarget.numChildren;
@@ -222,7 +280,6 @@ package com.funcom.project.utils.display
 		
 		public static function TraceAncestors(aTarget:DisplayObject):void
 		{
-			//TODO : Externalize this when we have someplace to externalize to
 			if (aTarget != null)
 			{
 				trace("[" + getQualifiedClassName(aTarget), aTarget.name + "]");
@@ -232,7 +289,6 @@ package com.funcom.project.utils.display
 		
 		public static function TraceDescendants(aTarget:DisplayObject, aPrefix:String = ""):void
 		{
-			//TODO : Externalize this when we have someplace to externalize to
 			trace(aPrefix + "[" + getQualifiedClassName(aTarget), aTarget.name + "]");
 			aPrefix += " ";
 			
@@ -247,29 +303,7 @@ package com.funcom.project.utils.display
 			}
 		}
 		
-		public static function StopAnimRecursive(aTarget:DisplayObjectContainer, aFrame:int = 1):void
-		{
-			var m:MovieClip = aTarget as MovieClip;
-			var d:DisplayObjectContainer;
-			
-			if (m)
-			{
-				m.gotoAndStop(aFrame);
-			}
-			
-			// don't iterate on a "frozen" children count (var len:int = aTarget.numChildren)
-			// because child can be remove while looping
-			for (var i:int = 0; i < aTarget.numChildren; i++)
-			{
-				d = aTarget.getChildAt(i) as DisplayObjectContainer;
-				if (d != null)
-				{
-					StopAnimRecursive(d, aFrame);
-				}
-			}
-		}
 		
-		// FASTER
 		public static function GetParentOffset(aTarget:DisplayObject):Point
 		{
 			var offset:Point = new Point(0, 0);
@@ -294,31 +328,6 @@ package com.funcom.project.utils.display
 			}
 			
 			return (offset);
-		}
-		
-		public static function StopAll(aContainer:DisplayObjectContainer):void
-		{
-			var dispObj:DisplayObject;
-			var dispArr:Array = new Array();
-			dispArr[dispArr.length] = aContainer;
-			
-			do
-			{
-				var container:DisplayObjectContainer = dispArr.pop();
-				if (container is MovieClip)
-				{
-					(container as MovieClip).stop();
-				}
-				for (var i:uint = 0; i < container.numChildren; i++)
-				{
-					dispObj = container.getChildAt(i);
-					if (dispObj is DisplayObjectContainer)
-					{
-						dispArr[dispArr.length] = dispObj;
-					}
-				}
-			}
-			while (dispArr.length > 0);
 		}
 		
 		public static function RemoveAllChildren(aContainer:DisplayObjectContainer):void

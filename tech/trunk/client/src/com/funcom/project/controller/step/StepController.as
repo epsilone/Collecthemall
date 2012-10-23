@@ -2,14 +2,14 @@
 * @author Keven Poulin
 * @compagny Funcom
 */
-package com.funcom.project.utils.logic.step
+package com.funcom.project.controller.step
 {
+	import com.funcom.project.controller.step.event.StepControllerEvent;
+	import com.funcom.project.controller.step.struct.StepObject;
 	import com.funcom.project.manager.implementation.console.enum.ELogType;
 	import com.funcom.project.manager.implementation.console.Logger;
 	import com.funcom.project.utils.commoninterface.IDestroyable;
 	import com.funcom.project.utils.event.Listener;
-	import com.funcom.project.utils.logic.step.event.StepControllerEvent;
-	import com.funcom.project.utils.logic.step.struct.StepObject;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	

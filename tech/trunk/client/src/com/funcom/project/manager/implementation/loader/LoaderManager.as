@@ -15,6 +15,8 @@ package com.funcom.project.manager.implementation.loader
 	import com.funcom.project.manager.implementation.loader.struct.LoadPacket;
 	import com.funcom.project.manager.implementation.loader.struct.LoadStatistic;
 	import com.funcom.project.manager.implementation.loader.struct.LoadWorker;
+	import com.funcom.project.utils.display.DisplayUtil;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.system.ApplicationDomain;
 	import flash.text.TextField;
@@ -132,7 +134,7 @@ package com.funcom.project.manager.implementation.loader
 			return packet;
 		}
 		
-		public function loadGroup(loadgroup:LoadGroup):void
+		/*public function loadGroup(loadgroup:LoadGroup):void
 		{
 			//Put the goupe in the pending group list
 			registerGroup(loadgroup);
@@ -155,7 +157,7 @@ package com.funcom.project.manager.implementation.loader
 					}
 				}
 			}
-		}
+		}*/
 		
 		public function hasFile(filePath:String):Boolean
 		{
@@ -198,6 +200,11 @@ package com.funcom.project.manager.implementation.loader
 				{
 					classDefinition = packet.applicationDomain.getDefinition(symbolLinkage) as Class;
 					symbol = new classDefinition();
+					
+					if (symbol is DisplayObjectContainer)
+					{
+						DisplayUtil.recursiveStop(symbol as DisplayObjectContainer);
+					}
 				}
 				catch (e:ReferenceError)
 				{

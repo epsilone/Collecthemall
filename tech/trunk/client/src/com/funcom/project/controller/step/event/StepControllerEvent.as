@@ -2,7 +2,7 @@
 * @author Keven Poulin
 * @compagny Funcom
 */
-package com.funcom.project.utils.logic.step.event
+package com.funcom.project.controller.step.event
 {
 	import flash.events.Event;
 	
