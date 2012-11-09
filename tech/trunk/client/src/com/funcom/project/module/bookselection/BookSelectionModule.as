@@ -158,7 +158,7 @@ package com.funcom.project.module.bookselection
 		
 		private function createBookThumbnailList():void 
 		{
-			var fullBookList:Vector.<BookItemTemplate> = Vector.<BookItemTemplate>(_inventoryManager.getItemTemplateListByItemTemplateTypeId(EItemTemplateType.BOOK_TEMPLATE_TYPE.id));
+			var fullBookList:Vector.<BookItemTemplate> = Vector.<BookItemTemplate>(_inventoryManager.cache.getItemTemplateListByItemTemplateTypeId(EItemTemplateType.BOOK_TEMPLATE_TYPE.id));
 			
 			for each (var bookTemplate:BookItemTemplate in fullBookList) 
 			{

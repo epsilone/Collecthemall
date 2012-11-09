@@ -132,7 +132,7 @@ package com.funcom.project.module.bookselection.struct
 			DisplayUtil.RemoveAllChildren(this);
 			
 			//Get the curent locked state
-			var itemList:Vector.<Item> = _inventoryManager.getItemListByItemTemplateId(_bookItemTemplate.itemTemplateId);
+			var itemList:Vector.<Item> = _inventoryManager.cache.getItemListByItemTemplateId(_bookItemTemplate.itemTemplateId);
 			_isUnlocked = Boolean(itemList.length > 0);
 			
 			//Add main image

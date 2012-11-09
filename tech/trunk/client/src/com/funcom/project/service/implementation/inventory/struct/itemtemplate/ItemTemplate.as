@@ -5,7 +5,7 @@
 
 package com.funcom.project.service.implementation.inventory.struct.itemtemplate 
 {
-	import com.funcom.project.service.implementation.inventory.struct.cache.ICacheObject;
+	import com.funcom.project.manager.implementation.inventory.cache.ICacheObject;
 	import flash.events.EventDispatcher;
 	
 	public class ItemTemplate implements ICacheObject

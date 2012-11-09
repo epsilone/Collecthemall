@@ -7,6 +7,8 @@
 		<descriptionToken>Card #1 description</descriptionToken>
 		<assetPath>asset/item/normal/card/Card_1.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/card/Card_1.swf</assetThumbnailPath>
+		<width>108</width>
+		<height>70</height>
 		<cardCategoryTypeId>1</cardCategoryTypeId>
 	</ItemTemplate>
 	<ItemTemplate>
@@ -16,6 +18,8 @@
 		<descriptionToken>Card #2 description</descriptionToken>
 		<assetPath>asset/item/normal/card/Card_2.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/card/Card_2.swf</assetThumbnailPath>
+		<width>108</width>
+		<height>70</height>
 		<cardCategoryTypeId>1</cardCategoryTypeId>
 	</ItemTemplate>
 
@@ -27,10 +31,48 @@
 		<descriptionToken>Book #1 description</descriptionToken>
 		<assetPath>asset/item/normal/book/Book_1.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/book/Book_1.swf</assetThumbnailPath>
+		<width>280</width>
+		<height>340</height>
 		<content>
-			<page bgAssetPath="asset/item/thumb/book/Book_1.swf">
-				<card templateId="1" xPos="100" yPos="100"/>
-				<card templateId="2" xPos="100" yPos="400"/>
+			<page bgAssetPath="asset/resource/Bg1.swf">
+				<cardSlot slotId="1" cardTemplateId="1" xPos="37" yPos="10"/>
+				<cardSlot slotId="2" cardTemplateId="2" xPos="156" yPos="10"/>
+				<cardSlot slotId="3" cardTemplateId="1" xPos="37" yPos="92"/>
+				<cardSlot slotId="4" cardTemplateId="2" xPos="156" yPos="92"/>
+				<cardSlot slotId="5" cardTemplateId="1" xPos="37" yPos="173"/>
+				<cardSlot slotId="6" cardTemplateId="2" xPos="156" yPos="173"/>
+				<cardSlot slotId="7" cardTemplateId="1" xPos="37" yPos="255"/>
+				<cardSlot slotId="8" cardTemplateId="2" xPos="156" yPos="255"/>
+			</page>
+			<page bgAssetPath="asset/resource/Bg2.swf">
+				<cardSlot slotId="9" cardTemplateId="1" xPos="37" yPos="10"/>
+				<cardSlot slotId="10" cardTemplateId="1" xPos="37" yPos="92"/>
+				<cardSlot slotId="11" cardTemplateId="1" xPos="37" yPos="173"/>
+			</page>
+			<page bgAssetPath="asset/resource/Bg3.swf">
+				<cardSlot slotId="12" cardTemplateId="2" xPos="156" yPos="10"/>
+				<cardSlot slotId="13" cardTemplateId="2" xPos="156" yPos="92"/>
+				<cardSlot slotId="14" cardTemplateId="2" xPos="156" yPos="173"/>
+				<cardSlot slotId="15" cardTemplateId="2" xPos="156" yPos="255"/>
+			</page>
+			<page bgAssetPath="asset/resource/Bg4.swf">
+				<cardSlot slotId="16" cardTemplateId="1" xPos="37" yPos="10"/>
+				<cardSlot slotId="17" cardTemplateId="2" xPos="156" yPos="92"/>
+				<cardSlot slotId="18" cardTemplateId="1" xPos="37" yPos="173"/>
+				<cardSlot slotId="19" cardTemplateId="2" xPos="156" yPos="255"/>
+			</page>
+			<page bgAssetPath="asset/resource/Bg5.swf">
+				<cardSlot slotId="20" cardTemplateId="2" xPos="156" yPos="10"/>
+				<cardSlot slotId="21" cardTemplateId="1" xPos="37" yPos="173"/>
+				<cardSlot slotId="22" cardTemplateId="2" xPos="156" yPos="173"/>
+				<cardSlot slotId="23" cardTemplateId="1" xPos="37" yPos="255"/>
+			</page>
+			<page bgAssetPath="asset/resource/Bg6.swf">
+			</page>
+			<page bgAssetPath="asset/resource/Bg7.swf">
+			</page>
+			<page bgAssetPath="asset/resource/Bg8.swf">
+				<cardSlot slotId="24" cardTemplateId="2" xPos="156" yPos="173"/>
 			</page>
 		</content>
 	</ItemTemplate>
@@ -41,9 +83,11 @@
 		<descriptionToken>Book #2 description</descriptionToken>
 		<assetPath>asset/item/normal/book/Book_2.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/book/Book_2.swf</assetThumbnailPath>
+		<width>200</width>
+		<height>200</height>
 		<content>
 			<page bgAssetPath="asset/item/thumb/book/Book_2.swf">
-				<card templateId="1" xPos="100" yPos="100"/>
+				<cardSlot slotId="23" cardTemplateId="1" xPos="37" yPos="255"/>
 			</page>
 		</content>
 	</ItemTemplate>
@@ -54,9 +98,11 @@
 		<descriptionToken>Book #3 description</descriptionToken>
 		<assetPath>asset/item/normal/book/Book_3.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/book/Book_3.swf</assetThumbnailPath>
+		<width>200</width>
+		<height>200</height>
 		<content>
 			<page bgAssetPath="asset/item/thumb/book/Book_3.swf">
-				<card templateId="2" xPos="100" yPos="400"/>
+				<cardSlot slotId="23" cardTemplateId="1" xPos="37" yPos="255"/>
 			</page>
 		</content>
 	</ItemTemplate>
@@ -67,6 +113,8 @@
 		<descriptionToken>Book #4 description</descriptionToken>
 		<assetPath>asset/item/normal/book/Book_4.swf</assetPath>
 		<assetThumbnailPath>asset/item/thumb/book/Book_4.swf</assetThumbnailPath>
+		<width>200</width>
+		<height>200</height>
 		<content>
 			<page bgAssetPath="asset/item/thumb/book/Book_4.swf">
 			</page>
@@ -77,9 +125,28 @@
 	<ItemTemplate>
 		<itemTemplateId>7</itemTemplateId>
 		<itemTemplateTypeId>3</itemTemplateTypeId>
-		<nameToken>Card Pack #1</nameToken>
-		<descriptionToken>Card Pack #1 description</descriptionToken>
-		<assetPath>asset/item/normal/cardpack/CardPack_1.swf</assetPath>
-		<assetThumbnailPath>asset/item/thumb/cardpack/CardPack_1.swf</assetThumbnailPath>
+		<nameToken>Copper Card Pack</nameToken>
+		<descriptionToken>Copper Card Pack description</descriptionToken>
+		<assetPath>asset/item/normal/cardpack/CopperCardPack.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/cardpack/CopperCardPack.swf</assetThumbnailPath>
+		<numberOfCards>3</numberOfCards>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>8</itemTemplateId>
+		<itemTemplateTypeId>3</itemTemplateTypeId>
+		<nameToken>Silver Card Pack</nameToken>
+		<descriptionToken>Silver Card Pack description</descriptionToken>
+		<assetPath>asset/item/normal/cardpack/SilverCardPack.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/cardpack/SilverCardPack.swf</assetThumbnailPath>
+		<numberOfCards>5</numberOfCards>
+	</ItemTemplate>
+	<ItemTemplate>
+		<itemTemplateId>9</itemTemplateId>
+		<itemTemplateTypeId>3</itemTemplateTypeId>
+		<nameToken>Gold Card Pack</nameToken>
+		<descriptionToken>Gold Card Pack description</descriptionToken>
+		<assetPath>asset/item/normal/cardpack/GoldCardPack.swf</assetPath>
+		<assetThumbnailPath>asset/item/thumb/cardpack/GoldCardPack.swf</assetThumbnailPath>
+		<numberOfCards>7</numberOfCards>
 	</ItemTemplate>
 </ItemTemplateList>

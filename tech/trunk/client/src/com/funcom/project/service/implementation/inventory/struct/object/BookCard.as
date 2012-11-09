@@ -16,6 +16,7 @@ package com.funcom.project.service.implementation.inventory.struct.object
 		/************************************************************************************************/
 		/*	Member var																					*/
 		/************************************************************************************************/
+		private var _slotId:int;
 		private var _itemTemplateId:int;
 		private var _xPos:int;
 		private var _yPos:int;
@@ -30,7 +31,8 @@ package com.funcom.project.service.implementation.inventory.struct.object
 				return;
 			}
 			
-			_itemTemplateId = int(aXmlNode.@templateId);
+			_slotId = int(aXmlNode.@slotId);
+			_itemTemplateId = int(aXmlNode.@cardTemplateId);
 			_xPos = int(aXmlNode.@xPos);
 			_yPos = int(aXmlNode.@yPos);
 		}
@@ -50,6 +52,11 @@ package com.funcom.project.service.implementation.inventory.struct.object
 		/************************************************************************************************/
 		/*	Getter / Setter																				*/
 		/************************************************************************************************/
+		public function get slotId():int 
+		{
+			return _slotId;
+		}
+		
 		public function get itemTemplateId():int 
 		{
 			return _itemTemplateId;

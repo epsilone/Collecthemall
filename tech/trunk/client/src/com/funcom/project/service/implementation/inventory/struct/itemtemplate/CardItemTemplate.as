@@ -17,6 +17,8 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/*	Member var																					*/
 		/************************************************************************************************/
 		//Data
+		protected var _width:int;
+		protected var _height:int;
 		protected var _cardCategoryTypeId:int;
 		
 		/************************************************************************************************/
@@ -30,6 +32,8 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 			{
 				return;
 			}
+			_width = int(aXmlNode["width"]);
+			_height = int(aXmlNode["height"]);
 			_cardCategoryTypeId = int(aXmlNode["cardCategoryTypeId"]);
 		}
 		
@@ -51,6 +55,16 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		public function get cardCategoryTypeId():int 
 		{
 			return _cardCategoryTypeId;
+		}
+		
+		public function get width():int 
+		{
+			return _width;
+		}
+		
+		public function get height():int 
+		{
+			return _height;
 		}
 	}
 }

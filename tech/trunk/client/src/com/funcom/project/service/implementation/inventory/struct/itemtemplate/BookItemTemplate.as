@@ -17,7 +17,9 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/************************************************************************************************/
 		/*	Member var																					*/
 		/************************************************************************************************/
-		private var _bookContent:BookContent;
+		protected var _bookContent:BookContent;
+		protected var _width:int;
+		protected var _height:int;
 		
 		/************************************************************************************************/
 		/*	Constructor / Init / Dispose																*/
@@ -30,7 +32,8 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 			{
 				return;
 			}
-			
+			_width = int(aXmlNode["width"]);
+			_height = int(aXmlNode["height"]);
 			_bookContent = new BookContent(XML(aXmlNode.content));
 		}
 		
@@ -52,6 +55,16 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		public function get bookContent():BookContent 
 		{
 			return _bookContent;
+		}
+		
+		public function get width():int 
+		{
+			return _width;
+		}
+		
+		public function get height():int 
+		{
+			return _height;
 		}
 	}
 }

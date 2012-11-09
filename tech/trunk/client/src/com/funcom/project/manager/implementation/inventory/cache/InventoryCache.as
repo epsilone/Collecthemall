@@ -3,14 +3,17 @@
 * @compagny Funcom
 */
 
-package com.funcom.project.service.implementation.inventory.struct.cache 
+package com.funcom.project.manager.implementation.inventory.cache 
 {
 	import com.funcom.project.manager.implementation.console.enum.ELogType;
 	import com.funcom.project.manager.implementation.console.Logger;
+	import com.funcom.project.manager.implementation.inventory.event.InventoryCacheEvent;
 	import com.funcom.project.service.implementation.inventory.struct.item.Item;
 	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
+	import flash.events.EventDispatcher;
 	import flash.utils.Dictionary;
-	public class InventoryCache
+	
+	public class InventoryCache extends EventDispatcher
 	{
 		/************************************************************************************************/
 		/*	Const var																					*/
@@ -26,6 +29,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 		//Logical cache
 		private var _itemByItemIdDict:Dictionary;
 		private var _itemListByItemTemplateIdDict:Dictionary;
+		private var _itemListByItemTemplateTypeIdDict:Dictionary;
 		private var _itemTemplateByItemTemplateIdDict:Dictionary;
 		private var _itemTemplateListByItemTemplateTypeId:Dictionary;
 		
@@ -44,6 +48,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			
 			_itemByItemIdDict = new Dictionary(true);
 			_itemListByItemTemplateIdDict = new Dictionary(true);
+			_itemListByItemTemplateTypeIdDict = new Dictionary(true);
 			_itemTemplateByItemTemplateIdDict = new Dictionary(true);
 			_itemTemplateListByItemTemplateTypeId = new Dictionary(true);
 		}
@@ -74,7 +79,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 				var itemTemplate:ItemTemplate = aObject as ItemTemplate;
 				if (isItemTemplateAlreadyInCache(itemTemplate))
 				{
-					updateItemTemplate(itemTemplate)
+					updateItemTemplate(itemTemplate);
 				}
 				else
 				{
@@ -175,6 +180,32 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			return vectorBuffer;
 		}
 		
+		public function getItemQuantityByItemTemplateId(aItemTemplateId:int):int
+		{
+			var quantity:int = 0;
+			var itemList:Vector.<Item> = getItemListByItemTemplateId(aItemTemplateId);
+			var len:int = itemList.length;
+			
+			for (var i:int = 0; i < len; i++) 
+			{
+				quantity += itemList[i].quantity;
+			}
+			
+			return quantity;
+		}
+		
+		public function getItemListByItemTemplateTypeId(aItemTemplateTypeId:int):Vector.<Item>
+		{
+			var vectorBuffer:Vector.<Item>;
+			vectorBuffer = _itemListByItemTemplateTypeIdDict[aItemTemplateTypeId];
+			if (vectorBuffer == null)
+			{
+				vectorBuffer = new Vector.<Item>();
+				_itemListByItemTemplateTypeIdDict[aItemTemplateTypeId] = vectorBuffer;
+			}
+			return vectorBuffer;
+		}
+		
 		/************************************************************************************************/
 		/*	Private																						*/
 		/************************************************************************************************/
@@ -187,6 +218,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 		private function addItem(aItem:Item):void
 		{
 			var vectorBuffer:Vector.<Item>;
+			var itemTemplateBuffer:ItemTemplate;
 			
 			//Add to main list
 			_itemList.push(aItem);
@@ -199,6 +231,15 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			}
 			vectorBuffer = _itemListByItemTemplateIdDict[aItem.itemTemplateId];
 			vectorBuffer.push(aItem);
+			itemTemplateBuffer = getItemTemplateByItemTemplateId(aItem.itemTemplateId);
+			if (_itemListByItemTemplateTypeIdDict[itemTemplateBuffer.itemTemplateTypeId] == null)
+			{
+				_itemListByItemTemplateTypeIdDict[itemTemplateBuffer.itemTemplateTypeId] = new Vector.<Item>();
+			}
+			vectorBuffer = _itemListByItemTemplateTypeIdDict[itemTemplateBuffer.itemTemplateTypeId];
+			vectorBuffer.push(aItem);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_UPDATED, aItem.itemTemplateId, aItem.id));
 		}
 		
 		private function updateItem(aItem:Item):void
@@ -207,6 +248,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			var len:int = _itemList.length;
 			var index:int = -1;
 			var vectorBuffer:Vector.<Item>;
+			var itemTemplateBuffer:ItemTemplate;
 			
 			//Find in main list
 			for (var i:int = 0; i < len; i++) 
@@ -229,9 +271,14 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			_itemByItemIdDict[itemBuffer.id] = aItem;
 			vectorBuffer = _itemListByItemTemplateIdDict[itemBuffer.itemTemplateId];
 			vectorBuffer.splice(vectorBuffer.indexOf(itemBuffer), 1, aItem);
+			itemTemplateBuffer = getItemTemplateByItemTemplateId(aItem.itemTemplateId);
+			vectorBuffer = _itemListByItemTemplateTypeIdDict[itemTemplateBuffer.itemTemplateTypeId];
+			vectorBuffer.splice(vectorBuffer.indexOf(itemBuffer), 1, aItem);
 			
 			//Update from main list
 			_itemList.splice(i, 1, aItem);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_UPDATED, aItem.itemTemplateId, aItem.id));
 		}
 		
 		private function RemoveItem(aItem:Item):void
@@ -240,6 +287,7 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			var len:int = _itemList.length;
 			var index:int = -1;
 			var vectorBuffer:Vector.<Item>;
+			var itemTemplateBuffer:ItemTemplate;
 			
 			//Find in main list
 			for (var i:int = 0; i < len; i++) 
@@ -262,9 +310,14 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			delete _itemByItemIdDict[aItem.id];
 			vectorBuffer = _itemListByItemTemplateIdDict[itemBuffer.itemTemplateId];
 			vectorBuffer.splice(vectorBuffer.indexOf(itemBuffer), 1);
+			itemTemplateBuffer = getItemTemplateByItemTemplateId(aItem.itemTemplateId);
+			vectorBuffer = _itemListByItemTemplateTypeIdDict[itemTemplateBuffer.itemTemplateTypeId];
+			vectorBuffer.splice(vectorBuffer.indexOf(itemBuffer), 1);
 			
 			//Remove from main list
 			_itemList.splice(i, 1);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_UPDATED, aItem.itemTemplateId, aItem.id));
 		}
 		
 		//---------------[ ITEM TEMPLATE ]---------------
@@ -288,6 +341,8 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			}
 			vectorBuffer = _itemTemplateListByItemTemplateTypeId[aItemTemplate.itemTemplateTypeId];
 			vectorBuffer.push(aItemTemplate);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_TEMPLATE_UPDATED, aItemTemplate.itemTemplateId));
 		}
 		
 		private function updateItemTemplate(aItemTemplate:ItemTemplate):void
@@ -321,6 +376,8 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			
 			//Update from main list
 			_itemTemplateList.splice(index, 1, aItemTemplate);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_TEMPLATE_UPDATED, aItemTemplate.itemTemplateId));
 		}
 		
 		private function RemoveItemTemplate(aItemTemplate:ItemTemplate):void
@@ -354,6 +411,8 @@ package com.funcom.project.service.implementation.inventory.struct.cache
 			
 			//Remove from main list
 			_itemTemplateList.splice(index, 1);
+			
+			dispatchEvent(new InventoryCacheEvent(InventoryCacheEvent.ITEM_TEMPLATE_UPDATED, aItemTemplate.itemTemplateId));
 		}
 
 		/************************************************************************************************/

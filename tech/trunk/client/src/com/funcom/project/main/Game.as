@@ -5,23 +5,21 @@ package com.funcom.project.main
 	import com.funcom.project.controller.step.StepController;
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.event.ManagerEvent;
-	import com.funcom.project.manager.implementation.layer.enum.ELayerDefinition;
-	import com.funcom.project.manager.implementation.layer.ILayerManager;
-	import com.funcom.project.manager.implementation.loader.ILoaderManager;
+	import com.funcom.project.manager.implementation.console.enum.ELogType;
+	import com.funcom.project.manager.implementation.console.Logger;
+	import com.funcom.project.manager.implementation.inventory.IInventoryManager;
 	import com.funcom.project.manager.implementation.module.enum.EModuleDefinition;
 	import com.funcom.project.manager.implementation.module.event.ModuleManagerEvent;
 	import com.funcom.project.manager.implementation.module.IModuleManager;
 	import com.funcom.project.manager.implementation.update.IUpdateManager;
 	import com.funcom.project.manager.importation.GameManagerImport;
 	import com.funcom.project.manager.ManagerA;
-	import com.funcom.project.service.enum.EServiceDefinition;
 	import com.funcom.project.service.event.ServiceEvent;
-	import com.funcom.project.service.implementation.time.ITimeService;
+	import com.funcom.project.service.implementation.inventory.enum.EItemTemplateType;
+	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
 	import com.funcom.project.service.importation.GameServiceImport;
 	import com.funcom.project.service.ServiceA;
 	import com.funcom.project.utils.event.Listener;
-	import flash.display.DisplayObjectContainer;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -62,7 +60,7 @@ package com.funcom.project.main
 			_initStepController.addStep(5, getNeededGameManager, null, [4]);
 			_initStepController.addStep(6, startUpdateManager, null, [5]);
 			_initStepController.addStep(7, openHudModule, null, [6]);
-			_initStepController.addStep(8, openBookSelectionModule, null, [6]);
+			_initStepController.addStep(8, openMainModule, null, [6]);
 			_initStepController.addStep(9, openDebugModule, null, [6]);
 			
 			Listener.add(StepControllerEvent.ON_STEP_COMPLETED, _initStepController as IEventDispatcher, onInitStepCompleted);
@@ -160,17 +158,32 @@ package com.funcom.project.main
 		}
 		/*************************************************************/
 		
-		private function openBookSelectionModule():void 
+		private function openMainModule():void 
 		{
-			Listener.add(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onBookSelectionModuleOpened);
-			_moduleManager.launchModule(EModuleDefinition.BOOK_SELECTION);
+			var inventoryManager:IInventoryManager = ManagerA.getManager(EManagerDefinition.INVENTORY_MANAGER) as IInventoryManager;
+			var bookList:Vector.<ItemTemplate> = inventoryManager.cache.getItemTemplateListByItemTemplateTypeId(EItemTemplateType.BOOK_TEMPLATE_TYPE.id);
+			
+			
+			Listener.add(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onMainModuleOpened);
+			if (bookList.length > 1)
+			{
+				_moduleManager.launchModule(EModuleDefinition.BOOK_SELECTION);
+			}
+			else if(bookList.length == 1)
+			{
+				_moduleManager.launchModule(EModuleDefinition.BOOK, [bookList[0].itemTemplateId]);
+			}
+			else
+			{
+				Logger.log(ELogType.ERROR, "Game", "openMainModule", "There is no book data!")
+			}
 		}
 		
-		private function onBookSelectionModuleOpened(aEvent:ModuleManagerEvent):void 
+		private function onMainModuleOpened(aEvent:ModuleManagerEvent):void 
 		{
-			if (aEvent.moduleDefinition == EModuleDefinition.BOOK_SELECTION)
+			if (aEvent.moduleDefinition == EModuleDefinition.BOOK_SELECTION || aEvent.moduleDefinition == EModuleDefinition.BOOK)
 			{
-				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onBookSelectionModuleOpened);
+				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onMainModuleOpened);
 				_initStepController.stepCompleted(8);
 			}
 		}

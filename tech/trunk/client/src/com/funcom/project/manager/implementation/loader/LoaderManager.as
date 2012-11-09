@@ -15,6 +15,7 @@ package com.funcom.project.manager.implementation.loader
 	import com.funcom.project.manager.implementation.loader.struct.LoadPacket;
 	import com.funcom.project.manager.implementation.loader.struct.LoadStatistic;
 	import com.funcom.project.manager.implementation.loader.struct.LoadWorker;
+	import com.funcom.project.manager.implementation.resolution.event.ResolutionManagerEvent;
 	import com.funcom.project.utils.display.DisplayUtil;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -133,6 +134,19 @@ package com.funcom.project.manager.implementation.loader
 			
 			return packet;
 		}
+		
+		public function setLoadingPriority(aFilePath:String, aPriority:int):void
+		{
+			for each (var packetBuffer:LoadPacket in _pendingPacketList) 
+			{
+				if (packetBuffer.filePath == aFilePath)
+				{
+					packetBuffer.loaderPriority = aPriority;
+					return;
+				}
+			}
+		}
+		
 		
 		/*public function loadGroup(loadgroup:LoadGroup):void
 		{

@@ -1,10 +1,11 @@
 package com.funcom.project.manager.implementation.inventory 
 {
 	import com.funcom.project.manager.AbstractManager;
+	import com.funcom.project.manager.implementation.inventory.cache.ICacheObject;
+	import com.funcom.project.manager.implementation.inventory.cache.InventoryCache;
 	import com.funcom.project.service.enum.EServiceDefinition;
 	import com.funcom.project.service.implementation.inventory.event.InventoryServiceEvent;
 	import com.funcom.project.service.implementation.inventory.IInventoryService;
-	import com.funcom.project.service.implementation.inventory.struct.cache.ICacheObject;
 	import com.funcom.project.service.implementation.inventory.struct.item.Item;
 	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
 	import com.funcom.project.service.ServiceA;
@@ -22,6 +23,9 @@ package com.funcom.project.manager.implementation.inventory
 		//Service
 		private var _inventoryService:IInventoryService;
 		
+		//Cache
+		private var _cache:InventoryCache;
+		
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
 		************************************************************************************************************/
@@ -37,42 +41,9 @@ package com.funcom.project.manager.implementation.inventory
 			onActivated();
 		}
 		
-
-		/************************************************************************************************/
-		/*	Public (INPUT)																				*/
-		/************************************************************************************************/
-		public function put(aObject:ICacheObject):Boolean
-		{
-			return _inventoryService.cache.put(aObject);
-		}
-		
-		public function remove(aObject:ICacheObject):Boolean
-		{
-			return _inventoryService.cache.remove(aObject);
-		}
-		
-		/************************************************************************************************/
-		/*	Public (OUTPUT)																				*/
-		/************************************************************************************************/
-		public function getItemByItemId(aItemId:int):Item
-		{
-			return _inventoryService.cache.getItemByItemId(aItemId);
-		}
-		
-		public function getItemListByItemTemplateId(aItemTemplateId:int):Vector.<Item>
-		{
-			return _inventoryService.cache.getItemListByItemTemplateId(aItemTemplateId);
-		}
-		
-		public function getItemTemplateByItemTemplateId(aItemTemplateId:int):ItemTemplate
-		{
-			return _inventoryService.cache.getItemTemplateByItemTemplateId(aItemTemplateId);
-		}
-		
-		public function getItemTemplateListByItemTemplateTypeId(aItemTemplateTypeId:int):Vector.<ItemTemplate>
-		{
-			return _inventoryService.cache.getItemTemplateListByItemTemplateTypeId(aItemTemplateTypeId);
-		}
+		/************************************************************************************************************
+		* Public Methods																							*
+		************************************************************************************************************/
 		
 		/************************************************************************************************************
 		* Private Methods																							*
@@ -87,6 +58,8 @@ package com.funcom.project.manager.implementation.inventory
 		override protected function init():void 
 		{
 			_inventoryService = ServiceA.getService(EServiceDefinition.INVENTORY_SERVICE) as IInventoryService;
+			
+			_cache = new InventoryCache();
 			
 			super.init();
 		}
@@ -103,23 +76,69 @@ package com.funcom.project.manager.implementation.inventory
 			_inventoryService.getInventory();
 		}
 		
+		private function updateCache(aEvent:InventoryServiceEvent):void 
+		{
+			var len:int;
+			var itemBuffer:Item;
+			var itemTemplateBuffer:Item;
+			var index:int;
+			
+			//Item template added
+			len = aEvent.itemTemplateAddedList.length;
+			for (index = 0; index < len; index++) 
+			{
+				_cache.put(aEvent.itemTemplateAddedList[index]);
+			}
+			
+			//Item template removed
+			len = aEvent.itemTemplateRemovedList.length;
+			for (index = 0; index < len; index++) 
+			{
+				_cache.remove(aEvent.itemTemplateRemovedList[index]);
+			}
+			
+			//Item added
+			len = aEvent.itemAddedList.length;
+			for (index = 0; index < len; index++) 
+			{
+				_cache.put(aEvent.itemAddedList[index]);
+			}
+			
+			//Item removed
+			len = aEvent.itemRemovedList.length;
+			for (index = 0; index < len; index++) 
+			{
+				_cache.remove(aEvent.itemRemovedList[index]);
+			}
+		}
+		
 		/************************************************************************************************************
 		* Handler Methods																							*
 		************************************************************************************************************/
 		private function onItemTemplateLoaded(aEvent:InventoryServiceEvent):void 
 		{
 			Listener.remove(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
+			
+			updateCache(aEvent);
+			
 			_initStepController.stepCompleted();
 		}
 		
 		private function onGetInventory(aEvent:InventoryServiceEvent):void 
 		{
 			Listener.remove(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onItemTemplateLoaded);
+			
+			updateCache(aEvent);
+			
 			_initStepController.stepCompleted();
 		}
 		
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*
 		************************************************************************************************************/
+		public function get cache():InventoryCache
+		{
+			return _cache;
+		}
 	}
 }

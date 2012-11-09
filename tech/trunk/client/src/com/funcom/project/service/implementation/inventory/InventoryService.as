@@ -11,9 +11,9 @@ package com.funcom.project.service.implementation.inventory
 	import com.funcom.project.service.AbstractService;
 	import com.funcom.project.service.implementation.inventory.enum.EItemTemplateType;
 	import com.funcom.project.service.implementation.inventory.event.InventoryServiceEvent;
-	import com.funcom.project.service.implementation.inventory.struct.cache.InventoryCache;
 	import com.funcom.project.service.implementation.inventory.struct.item.BookItem;
 	import com.funcom.project.service.implementation.inventory.struct.item.CardItem;
+	import com.funcom.project.service.implementation.inventory.struct.item.CardPackItem;
 	import com.funcom.project.service.implementation.inventory.struct.item.Item;
 	import com.funcom.project.service.implementation.inventory.struct.itemtemplate.ItemTemplate;
 	
@@ -27,7 +27,6 @@ package com.funcom.project.service.implementation.inventory
 		* Member Variables																							*
 		************************************************************************************************************/
 		//Reference holder
-		private var _cache:InventoryCache;
 		
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
@@ -40,8 +39,6 @@ package com.funcom.project.service.implementation.inventory
 		override public function initialize():void
 		{
 			super.initialize();
-			
-			_cache = new InventoryCache();
 			
 			onInitialized();
 		}
@@ -56,18 +53,6 @@ package com.funcom.project.service.implementation.inventory
 		
 		public function getInventory():void
 		{
-			Logger.log(ELogType.TODO, "InventoryService", "getInventory()", "Need to be implement with server communication.");
-			
-			var item:Item;
-			
-			//Add 1 card
-			item = new CardItem(201, 1, 1);
-			_cache.put(item);
-			
-			//Add 1 book
-			item = new BookItem(301, 3, 1);
-			_cache.put(item);
-			
 			onGetInventory();
 		}
 		
@@ -87,29 +72,43 @@ package com.funcom.project.service.implementation.inventory
 			var itemTemplateType:EItemTemplateType;
 			var itemTemplateTypeId:int;
 			var itemTemplate:ItemTemplate;
+			var itemTemplateList:Vector.<ItemTemplate> = new Vector.<ItemTemplate>();
+			var event:InventoryServiceEvent;
 			
 			for (var i:int = 0; i < itemTemplateCount; i++)
             {
 				itemTemplateTypeId = XML(itemTemplateListNodes[i])["itemTemplateTypeId"];
 				itemTemplateType = EItemTemplateType.getItemTemplateTypeById(itemTemplateTypeId);
 				itemTemplate = new itemTemplateType.itemTemplateClass(XML(itemTemplateListNodes[i]));
-				_cache.put(itemTemplate);
+				itemTemplateList.push(itemTemplate);
             }
 			
-			dispatchEvent(new InventoryServiceEvent(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED));
+			
+			event = new InventoryServiceEvent(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED);
+			event.itemTemplateAddedList = itemTemplateList;
+			dispatchEvent(event);
 		}
 		
 		private function onGetInventory():void
 		{
-			dispatchEvent(new InventoryServiceEvent(InventoryServiceEvent.ON_GET_INVENOTRY));
+			var event:InventoryServiceEvent;
+			var itemList:Vector.<Item> = new Vector.<Item>();
+			
+			Logger.log(ELogType.TODO, "InventoryService", "getInventory()", "Need to be implement with server communication.");
+			var id:int = 1;
+			itemList.push(new CardItem(id++, 1, 1));
+			itemList.push(new BookItem(id++, 3, 1));
+			//itemList.push(new CardPackItem(id++, 8, 2));
+			//itemList.push(new CardPackItem(id++, 7, 1));
+			//itemList.push(new CardPackItem(id++, 8, 13));
+			
+			event = new InventoryServiceEvent(InventoryServiceEvent.ON_GET_INVENOTRY);
+			event.itemAddedList = itemList;
+			dispatchEvent(event);
 		}
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*
-		************************************************************************************************************/	
-		public function get cache():InventoryCache 
-		{
-			return _cache;
-		}
+		************************************************************************************************************/
 	}
 
 }

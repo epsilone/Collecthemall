@@ -11,6 +11,7 @@ package com.funcom.project.module.hud
 	import com.funcom.project.manager.implementation.module.struct.AbstractModule;
 	import com.funcom.project.manager.implementation.transition.enum.ETransitionDefinition;
 	import com.funcom.project.manager.ManagerA;
+	import com.funcom.project.module.hud.component.packet.CardPackComponent;
 	import com.funcom.project.utils.event.Listener;
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
@@ -30,9 +31,8 @@ package com.funcom.project.module.hud
 		************************************************************************************************************/
 		//Visual ref
 		private var _bookSelectionBtn:MovieClip;
-		private var _avatarPicture:MovieClip;
 		private var _friendbar:MovieClip;
-		private var _progressbar:MovieClip;
+		private var _cardPackComponent:CardPackComponent;
 		
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
@@ -46,9 +46,7 @@ package com.funcom.project.module.hud
 		{
 			//Release visual reference
 			_bookSelectionBtn = null;
-			_avatarPicture = null;
 			_friendbar = null;
-			_progressbar = null;
 			
 			super.destroy();
 		}
@@ -74,9 +72,8 @@ package com.funcom.project.module.hud
 		
 		override protected function getvisualDefinition():void 
 		{
-			_avatarPicture = _loaderManager.getSymbol(_moduleDefinition.assetFilePath, "AvatarPicture_HudModule") as MovieClip;
 			_friendbar = _loaderManager.getSymbol(_moduleDefinition.assetFilePath, "FriendBar_HudModule") as MovieClip;
-			_progressbar = _loaderManager.getSymbol(_moduleDefinition.assetFilePath, "Progressbar_HudModule") as MovieClip;
+			_cardPackComponent = new CardPackComponent();
 			
 			_bookSelectionBtn = _friendbar["BookSelectionBtn"] as MovieClip;
 			
@@ -85,26 +82,21 @@ package com.funcom.project.module.hud
 		
 		override protected function render():void 
 		{
-			//Avatar picture
-			_avatarPicture.x = LEFT_MARGIN;
-			_avatarPicture.y = TOP_MARGIN;
-			
-			//Progressbar
-			_progressbar.x = _resolutionManager.stageWidth - _progressbar.width - RIGHT_MARGIN;
-			_progressbar.y = TOP_MARGIN;
-			
 			//Friendbar
 			_friendbar.x = (_resolutionManager.stageWidth * 0.5) - (_friendbar.width * 0.5);
 			_friendbar.y = _resolutionManager.stageHeight - _friendbar.height - BOTTOM_MARGIN;
+			
+			//Packet component
+			_cardPackComponent.x = _resolutionManager.stageWidth - _cardPackComponent.width - RIGHT_MARGIN;
+			_cardPackComponent.y = TOP_MARGIN;
 			
 			super.render();
 		}
 		
 		override protected function addVisualOnStage():void 
 		{
-			addChild(_avatarPicture);
-			addChild(_progressbar);
 			addChild(_friendbar);
+			addChild(_cardPackComponent);
 			
 			super.addVisualOnStage();
 		}

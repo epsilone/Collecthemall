@@ -33,7 +33,7 @@ package com.funcom.project.controller.step
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
 		************************************************************************************************************/
-		public function StepController(aStepListName:String)
+		public function StepController(aStepListName:String = "")
 		{
 			_stepListName = aStepListName;
 			

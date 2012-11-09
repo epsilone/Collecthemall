@@ -83,8 +83,11 @@ package com.funcom.project.controller.step
 		{
 			_inProcess = false;
 			
-			_stepList[0].completed();
-			_stepList.splice(0, 1);
+			if (_stepList.length > 0)
+			{
+				_stepList[0].completed();
+				_stepList.splice(0, 1);
+			}
 			
 			processNextStep();
 		}

@@ -16,7 +16,7 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/************************************************************************************************/
 		/*	Member var																					*/
 		/************************************************************************************************/
-		//Data
+		protected var _numberOfCards:int;
 		
 		/************************************************************************************************/
 		/*	Constructor / Init / Dispose																*/
@@ -29,6 +29,7 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 			{
 				return;
 			}
+			_numberOfCards = int(aXmlNode["numberOfCards"]);
 		}
 		
 		/************************************************************************************************/
@@ -46,5 +47,9 @@ package com.funcom.project.service.implementation.inventory.struct.itemtemplate
 		/************************************************************************************************/
 		/*	Getter / Setter																				*/
 		/************************************************************************************************/
+		public function get numberOfCards():int 
+		{
+			return _numberOfCards;
+		}
 	}
 }
