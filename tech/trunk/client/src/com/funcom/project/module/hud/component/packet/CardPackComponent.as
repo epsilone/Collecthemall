@@ -501,7 +501,7 @@ package com.funcom.project.module.hud.component.packet
 			if (_isTweening) { return; }
 			
 			var cardPackThumb:CardPackThumbnail = aEvent.currentTarget as CardPackThumbnail;
-			_moduleManager.launchModule(EModuleDefinition.OPEN_CARD_PACK, [cardPackThumb.cardPackItem.id], ETransitionDefinition.PROCESSING);
+			_moduleManager.launchModule(EModuleDefinition.SCRATCH_CARD_MINIGAME, [cardPackThumb.cardPackItem.id], ETransitionDefinition.PROCESSING);
 		}
 		
 		/************************************************************************************************************

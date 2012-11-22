@@ -16,6 +16,7 @@ package com.funcom.project.service.enum
 		
 		public static const TIME_SERVICE:EServiceDefinition = new EServiceDefinition(CORE_SERVICE_CLASS_NAME + "time::TimeService");
 		public static const INVENTORY_SERVICE:EServiceDefinition = new EServiceDefinition(CORE_SERVICE_CLASS_NAME + "inventory::InventoryService");
+		public static const MINIGAME_SERVICE:EServiceDefinition = new EServiceDefinition(CORE_SERVICE_CLASS_NAME + "minigame::MinigameService");
 		
 		public function EServiceDefinition(aClassName:String)
 		{

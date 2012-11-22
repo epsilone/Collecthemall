@@ -6,6 +6,7 @@ package com.funcom.project.service.importation
 {
 	import com.funcom.project.service.enum.EServiceDefinition;
 	import com.funcom.project.service.implementation.inventory.InventoryService;
+	import com.funcom.project.service.implementation.minigame.MinigameService;
 	import com.funcom.project.service.implementation.time.TimeService;
 	
 	public class GameServiceImport
@@ -32,10 +33,12 @@ package com.funcom.project.service.importation
 		{
 			TimeService;
 			InventoryService;
+			MinigameService;
 			
 			var list:Vector.<EServiceDefinition> = new Vector.<EServiceDefinition>();
 			list.push(EServiceDefinition.TIME_SERVICE);
 			list.push(EServiceDefinition.INVENTORY_SERVICE);
+			list.push(EServiceDefinition.MINIGAME_SERVICE);
 			return list;
 		}
 		

@@ -12,7 +12,7 @@ package com.funcom.project.manager.implementation.module.enum
 	import com.funcom.project.module.bookselection.BookSelectionModule;
 	import com.funcom.project.module.debug.DebugModule;
 	import com.funcom.project.module.hud.HudModule;
-	import com.funcom.project.module.opencardpack.OpenCardPackModule;
+	import com.funcom.project.module.scratchcard.ScratchCardMinigameModule;
 	import flash.utils.ByteArray;
 	
 	public class EModuleDefinition 
@@ -32,7 +32,7 @@ package com.funcom.project.manager.implementation.module.enum
 		public static const DEBUG:EModuleDefinition = new EModuleDefinition("Debug", DebugModule, "asset/module/DebugModule.swf", EModuleType.STAND_ALONE, true);
 		public static const BOOK_SELECTION:EModuleDefinition = new EModuleDefinition("Book Selection", BookSelectionModule, "asset/module/BookSelectionModule.swf", EModuleType.SCREEN, true);
 		public static const BOOK:EModuleDefinition = new EModuleDefinition("Book", BookModule, "asset/module/BookModule.swf", EModuleType.SCREEN, true);
-		public static const OPEN_CARD_PACK:EModuleDefinition = new EModuleDefinition("Open Card Pack", OpenCardPackModule, "asset/module/OpenCardPackModule.swf", EModuleType.SCREEN, true);
+		public static const SCRATCH_CARD_MINIGAME:EModuleDefinition = new EModuleDefinition("Scratch Card Minigame", ScratchCardMinigameModule, "asset/module/ScratchCardMinigameModule.swf", EModuleType.SCREEN, true);
 		
 		
 		public function EModuleDefinition(aName:String, aInstanceClass:Class, aAssetFilePath:String, aModuleType:String, aRenderOnResize:Boolean = false) 

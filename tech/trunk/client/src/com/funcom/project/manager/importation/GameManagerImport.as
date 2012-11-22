@@ -7,6 +7,7 @@ package com.funcom.project.manager.importation
 	import com.funcom.project.manager.enum.EManagerDefinition;
 	import com.funcom.project.manager.implementation.ghost.GhostManager;
 	import com.funcom.project.manager.implementation.inventory.InventoryManager;
+	import com.funcom.project.manager.implementation.minigame.MinigameManager;
 	import com.funcom.project.manager.implementation.module.ModuleManager;
 	import com.funcom.project.manager.implementation.resolution.ResolutionManager;
 	import com.funcom.project.manager.implementation.time.TimeManager;
@@ -35,13 +36,13 @@ package com.funcom.project.manager.importation
 		************************************************************************************************************/
 		public static function getList():Vector.<EManagerDefinition>
 		{
-			UpdateManager;
-			ResolutionManager;
-			ModuleManager;
-			GhostManager;
-			TimeManager;
-			TransitionManager;
+			UpdateManager;//
+			ResolutionManager;//
+			ModuleManager;//
+			TimeManager;//
+			TransitionManager;//
 			InventoryManager;
+			MinigameManager;//
 			
 			var list:Vector.<EManagerDefinition> = new Vector.<EManagerDefinition>();
 			list.push(EManagerDefinition.UPDATE_MANAGER);
@@ -50,7 +51,7 @@ package com.funcom.project.manager.importation
 			list.push(EManagerDefinition.TIME_MANAGER);
 			list.push(EManagerDefinition.TRANSITION_MANAGER);
 			list.push(EManagerDefinition.INVENTORY_MANAGER);
-			//list.push(EManagerDefinition.GHOST_MANAGER);
+			list.push(EManagerDefinition.MINIGAME_MANAGER);
 			return list;
 		}
 		

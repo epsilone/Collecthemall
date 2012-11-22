@@ -29,6 +29,7 @@ package com.funcom.project.manager.enum
 		static public const TRANSITION_MANAGER:EManagerDefinition 	= new EManagerDefinition(CORE_MANAGER_CLASS_NAME + "transition::TransitionManager", "asset/manager/TransitionManager.swf");
 		public static const GHOST_MANAGER:EManagerDefinition 		= new EManagerDefinition(CORE_MANAGER_CLASS_NAME + "ghost::GhostManager");
 		public static const INVENTORY_MANAGER:EManagerDefinition 	= new EManagerDefinition(CORE_MANAGER_CLASS_NAME + "inventory::InventoryManager");
+		public static const MINIGAME_MANAGER:EManagerDefinition 	= new EManagerDefinition(CORE_MANAGER_CLASS_NAME + "minigame::MinigameManager");
 		
 		public function EManagerDefinition(aClassName:String, aAssetFilePath:String = "")
 		{

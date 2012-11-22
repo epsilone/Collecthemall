@@ -112,6 +112,11 @@ package com.funcom.project.manager
 			}
 		}
 		
+		protected function registerEvent():void 
+		{
+			
+		}
+		
 		protected final function changeState(aManagerState:EManagerState):void
 		{
 			_state = aManagerState;
@@ -166,6 +171,8 @@ package com.funcom.project.manager
 		protected function onActivated():void
 		{
 			changeState(EManagerState.ACTIVATED);
+			
+			registerEvent();
 		}
 		
 		protected function onManagerAssetLoaded(aLoadPacket:LoadPacket):void

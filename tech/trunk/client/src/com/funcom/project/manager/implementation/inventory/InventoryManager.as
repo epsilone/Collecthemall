@@ -61,18 +61,26 @@ package com.funcom.project.manager.implementation.inventory
 			
 			_cache = new InventoryCache();
 			
+			registerEvent();
+			
 			super.init();
+		}
+		
+		override protected function registerEvent():void 
+		{
+			Listener.add(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
+			Listener.add(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onGetInventory);
+			
+			super.registerEvent();
 		}
 		
 		private function loadItemTemplate():void 
 		{
-			Listener.add(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
 			_inventoryService.loadItemTemplate();
 		}
 		
 		private function getInventory():void 
 		{
-			Listener.add(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onGetInventory);
 			_inventoryService.getInventory();
 		}
 		
@@ -117,8 +125,6 @@ package com.funcom.project.manager.implementation.inventory
 		************************************************************************************************************/
 		private function onItemTemplateLoaded(aEvent:InventoryServiceEvent):void 
 		{
-			Listener.remove(InventoryServiceEvent.ON_ITEM_TEMPLATE_LOADED, _inventoryService, onItemTemplateLoaded);
-			
 			updateCache(aEvent);
 			
 			_initStepController.stepCompleted();
@@ -126,8 +132,6 @@ package com.funcom.project.manager.implementation.inventory
 		
 		private function onGetInventory(aEvent:InventoryServiceEvent):void 
 		{
-			Listener.remove(InventoryServiceEvent.ON_GET_INVENOTRY, _inventoryService, onItemTemplateLoaded);
-			
 			updateCache(aEvent);
 			
 			_initStepController.stepCompleted();

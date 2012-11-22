@@ -10,6 +10,7 @@ package com.funcom.project.manager.implementation.loader.struct
 	import com.funcom.project.manager.implementation.loader.event.LoaderManagerEvent;
 	import flash.events.EventDispatcher;
 	import flash.system.ApplicationDomain;
+	import flash.utils.setTimeout;
 	
 	public class LoadGroup extends EventDispatcher
 	{
@@ -60,6 +61,14 @@ package com.funcom.project.manager.implementation.loader.struct
 		/************************************************************************************************/
 		public function addToLoad(filePath:String, fileType:EFileType, applicationDomain:ApplicationDomain = null, avoidCaching:Boolean = false):void
 		{
+			for each (var loadPacket:LoadPacket in m_packetList) 
+			{
+				if (loadPacket.filePath == filePath)
+				{
+					return;
+				}
+			}
+			
 			var packet:LoadPacket = new LoadPacket(filePath, fileType, null, applicationDomain, m_loaderPriority, avoidCaching);
 			registerPacket(packet);
 		}
@@ -139,9 +148,14 @@ package com.funcom.project.manager.implementation.loader.struct
 			//Check if the group has been fully loaded
 			if (totalLoaded == m_packetList.length)
 			{
-				m_callback.apply(null, []);
-				state = ELoadGroupState.COMPLETED;
+				setTimeout(onCompleted, 1); // Hack to jump a frame
 			}
+		}
+		
+		private function onCompleted():void
+		{
+			m_callback.apply(null, []);
+			state = ELoadGroupState.COMPLETED;
 		}
 		
 		public function get packetList():Vector.<LoadPacket> 

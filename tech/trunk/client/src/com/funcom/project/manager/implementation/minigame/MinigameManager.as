@@ -1,18 +1,14 @@
-/**
-* @author Keven Poulin
-* @compagny Funcom
-*/
-package com.funcom.project.manager.implementation.resolution 
+package com.funcom.project.manager.implementation.minigame 
 {
 	import com.funcom.project.manager.AbstractManager;
-	import com.funcom.project.manager.enum.EManagerDefinition;
-	import com.funcom.project.manager.implementation.layer.ILayerManager;
-	import com.funcom.project.manager.implementation.resolution.event.ResolutionManagerEvent;
-	import com.funcom.project.manager.ManagerA;
+	import com.funcom.project.manager.implementation.minigame.event.MinigameManagerEvent;
+	import com.funcom.project.service.enum.EServiceDefinition;
+	import com.funcom.project.service.implementation.minigame.event.MinigameServiceEvent;
+	import com.funcom.project.service.implementation.minigame.IMinigameService;
+	import com.funcom.project.service.ServiceA;
 	import com.funcom.project.utils.event.Listener;
-	import flash.events.Event;
 	
-	public class ResolutionManager extends AbstractManager implements IResolutionManager 
+	public class MinigameManager extends AbstractManager implements IMinigameManager
 	{
 		/************************************************************************************************************
 		* Static/Constant variables																					*
@@ -21,17 +17,17 @@ package com.funcom.project.manager.implementation.resolution
 		/************************************************************************************************************
 		* Member Variables																							*
 		************************************************************************************************************/
-		//Manager
-		private var _layerManager:ILayerManager;
+		//Service
+		private var _minigameService:IMinigameService;
+		
+		//Reference holder
 		
 		//Management
-		private var _stageHeight:int;
-		private var _stageWidth:int;
 		
 		/************************************************************************************************************
 		* Constructor / Init / Dispose																				*	
 		************************************************************************************************************/
-		public function ResolutionManager() 
+		public function MinigameManager() 
 		{
 			
 		}
@@ -40,32 +36,32 @@ package com.funcom.project.manager.implementation.resolution
 		{
 			super.activate();
 			
-			//Get needed manager
-			_layerManager = ManagerA.getManager(EManagerDefinition.LAYER_MANAGER) as ILayerManager;
-			
-			//Init base value
-			_stageHeight = _layerManager.stageReference.stageHeight;
-			_stageWidth = _layerManager.stageReference.stageWidth;
-			
-			//Register needed event
-			registerEvent();
 			
 			onActivated();
 		}
 		
+
 		/************************************************************************************************************
 		* Public Methods																							*
 		************************************************************************************************************/
+		public function getScratchResult():void
+		{
+			_minigameService.getScratchResult();
+		}
 		
 		/************************************************************************************************************
 		* Private Methods																							*
 		************************************************************************************************************/
+		override protected function init():void 
+		{
+			_minigameService = ServiceA.getService(EServiceDefinition.MINIGAME_SERVICE) as IMinigameService;
+			
+			super.init();
+		}
+		
 		override protected function registerEvent():void 
 		{
-			if (_layerManager != null)
-			{
-				Listener.add(Event.RESIZE, _layerManager.stageReference, onStageResize);
-			}
+			Listener.add(MinigameServiceEvent.ON_GET_SCRATCH_RESULT, _minigameService, onGetScratchResult)
 			
 			super.registerEvent();
 		}
@@ -73,29 +69,16 @@ package com.funcom.project.manager.implementation.resolution
 		/************************************************************************************************************
 		* Handler Methods																							*
 		************************************************************************************************************/
-		private function onStageResize(aEvent:Event):void 
+		public function onGetScratchResult(aEvent:MinigameServiceEvent):void
 		{
-			var event:ResolutionManagerEvent;
-			
-			_stageHeight = _layerManager.stageReference.stageHeight;
-			_stageWidth = _layerManager.stageReference.stageWidth;
-			
-			event = new ResolutionManagerEvent(ResolutionManagerEvent.STAGE_RESIZE, _stageWidth, _stageHeight)
-			
+			var event:MinigameManagerEvent = new MinigameManagerEvent(MinigameManagerEvent.ON_GET_SCRATCH_RESULT);
+			event.dataList = aEvent.dataList;
+			event.rewardList = aEvent.rewardList;
 			dispatchEvent(event);
 		}
 		
 		/************************************************************************************************************
 		* Getter/Setter Methods																						*
 		************************************************************************************************************/
-		public function get stageHeight():int 
-		{
-			return _stageHeight;
-		}
-		
-		public function get stageWidth():int 
-		{
-			return _stageWidth;
-		}
 	}
 }

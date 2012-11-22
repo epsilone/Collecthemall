@@ -70,9 +70,6 @@ package com.funcom.project.manager.implementation.loader
 		
 		public function destroy():void 
 		{
-			//Unregister basic event
-			unregisterEvent();
-			
 			//Clear cache
 			_localCache = null;
 			
@@ -148,7 +145,7 @@ package com.funcom.project.manager.implementation.loader
 		}
 		
 		
-		/*public function loadGroup(loadgroup:LoadGroup):void
+		public function loadGroup(loadgroup:LoadGroup):void
 		{
 			//Put the goupe in the pending group list
 			registerGroup(loadgroup);
@@ -171,7 +168,7 @@ package com.funcom.project.manager.implementation.loader
 					}
 				}
 			}
-		}*/
+		}
 		
 		public function hasFile(filePath:String):Boolean
 		{
@@ -387,16 +384,6 @@ package com.funcom.project.manager.implementation.loader
 			}
 		}
 		
-		private function registerEvent():void
-		{
-			//TODO UpdateService.getInstance().register(this);
-		}
-		
-		private function unregisterEvent():void
-		{
-			//TODO UpdateService.getInstance().unregister(this);
-		}
-		
 		private function registerGroup(group:LoadGroup):void
 		{
 			//Basic condition
@@ -482,6 +469,7 @@ package com.funcom.project.manager.implementation.loader
 						Logger.log(ELogType.INFO, "LoaderManager.as", "checkIfPacketCached", "Retrieved in cache:" + requestedPacket.filePath);
 						requestedPacket.applicationDomain = cachedPacket.applicationDomain; //Fix: We can't load the same file in different domain. Caused by the resource logic.
 						requestedPacket.content = cachedPacket.content;
+						requestedPacket.state = cachedPacket.state;
 						//addToRequestedList(requestedPacket);
 						requestedPacket.triggerCallback();
 						return true;
@@ -564,10 +552,7 @@ package com.funcom.project.manager.implementation.loader
 			var loadPacket:LoadPacket = event.packetReference;
 			
 			//Update the cache
-			if (loadPacket.fileType != EFileType.IMG_FILE)
-			{
-				_localCache[loadPacket.filePath] = event.packetReference;
-			}
+			_localCache[loadPacket.filePath] = event.packetReference;
 			
 			//Trigger the callback
 			event.packetReference.triggerCallback();
