@@ -1,4 +1,8 @@
+# Java specific
+*.class
+
+
 target/
-com/funcom/ccg/thrift/
+thrift/
 .classpath
 
