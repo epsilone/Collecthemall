@@ -55,6 +55,19 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -67,6 +80,34 @@
     
     <build>
         <finalName>ccg</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+		        	<artifactId>lifecycle-mapping</artifactId>
+		        	<version>1.0.0</version>
+					<configuration>
+            			<lifecycleMappingMetadata>
+              				<pluginExecutions>
+                				<pluginExecution>
+                  					<pluginExecutionFilter>
+                    					<groupId>org.codehaus.mojo</groupId>
+                    					<artifactId>exec-maven-plugin</artifactId>
+                    					<versionRange>[1.0,)</versionRange>
+                    					<goals>
+                      						<goal>exec</goal>
+                    					</goals>
+                  					</pluginExecutionFilter>
+                  					<action>
+                    					<ignore/>
+                  					</action>
+                				</pluginExecution>
+              				</pluginExecutions>
+            			</lifecycleMappingMetadata>
+          			</configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
@@ -78,10 +119,51 @@
         	</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+			<plugin>
+    			<artifactId>maven-clean-plugin</artifactId>
+    			<version>2.5</version>
+    			<configuration>
+	      			<filesets>
+	        			<fileset>
+	          				<directory>src/main/java/com/funcom/ccg/thrift</directory>
+							<includes>
+					           	<include>**/*.java</include>
+					        </includes>
+	          				<followSymlinks>false</followSymlinks>
+	        			</fileset>
+	      			</filesets>
+    			</configuration>
+  			</plugin>
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>exec-maven-plugin</artifactId>
+		        <version>1.2.1</version>
+		        <executions>
+		        	<execution>
+		        	    <phase>generate-sources</phase>
+		            	<goals>
+		              		<goal>exec</goal>
+		            	</goals>
+		          	</execution>
+		        </executions>
+		        <configuration>
+		          	<executable>../../tools/thrift.exe</executable>
+		          	<arguments>
+		            	<argument>-v</argument>
+		            	<argument>-r</argument>
+		            	<argument>-out</argument>
+		            	<argument>src/main/java</argument>
+		            	<argument>--gen</argument>
+		            	<argument>java:beans,java5</argument>
+		            	<argument>../../common/transport.thrift</argument>
+		          	</arguments>
+		        </configuration>
 			</plugin>
 		</plugins>
     </build>
