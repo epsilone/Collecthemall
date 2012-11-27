@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.funcom.ccg</groupId>
+    <artifactId>ccg-client</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>CCGClient Maven</name>
+    <url>http://maven.apache.org</url>
+    
+    <build>
+        <finalName>client</finalName>
+        <plugins>
+			<plugin>
+    			<artifactId>maven-clean-plugin</artifactId>
+    			<version>2.5</version>
+    			<configuration>
+	      			<filesets>
+	        			<fileset>
+	          				<directory>src/com/funcom/ccg/thrift</directory>
+							<includes>
+					           	<include>**/*.as3</include>
+					        </includes>
+	          				<followSymlinks>false</followSymlinks>
+	        			</fileset>
+	      			</filesets>
+    			</configuration>
+  			</plugin>
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>exec-maven-plugin</artifactId>
+		        <version>1.2.1</version>
+		        <executions>
+		        	<execution>
+		        	    <phase>generate-sources</phase>
+		            	<goals>
+		              		<goal>exec</goal>
+		            	</goals>
+		          	</execution>
+		        </executions>
+		        <configuration>
+		          	<executable>../tools/thrift.exe</executable>
+		          	<arguments>
+		            	<argument>-v</argument>
+		            	<argument>-r</argument>
+		            	<argument>-out</argument>
+		            	<argument>src</argument>
+		            	<argument>--gen</argument>
+		            	<argument>as3</argument>
+		            	<argument>../common/transport.thrift</argument>
+		          	</arguments>
+		        </configuration>
+			</plugin>
+		</plugins>
+    </build>   
+</project>
