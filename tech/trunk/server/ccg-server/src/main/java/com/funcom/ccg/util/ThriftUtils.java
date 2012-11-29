@@ -2,10 +2,10 @@ package com.funcom.ccg.util;
 
 import java.io.ByteArrayOutputStream;
 
-
 import org.apache.thrift.TBase;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TJSONProtocol;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
 import org.apache.thrift.transport.TIOStreamTransport;
@@ -16,6 +16,7 @@ public final class ThriftUtils {
 
 	public static final String APPLICATION_THRIFT_VALUE = "application/x-thrift";
 	public static final TProtocolFactory BINARY_PROTOCOL_FACTORY = new TBinaryProtocol.Factory();
+	public static final TProtocolFactory JSON_PROTOCOL_FACTORY = new TJSONProtocol.Factory();
 
 	public static void deserialize(TProtocolFactory factory, TBase<?, ?> base, byte[] raw) {
 		final TTransport transport = new TMemoryInputTransport(raw);
