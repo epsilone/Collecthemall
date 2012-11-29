@@ -161,7 +161,7 @@
 		            	<argument>src/main/java</argument>
 		            	<argument>--gen</argument>
 		            	<argument>java:beans,java5</argument>
-		            	<argument>../../common/transport.thrift</argument>
+		            	<argument>../../common/all.thrift</argument>
 		          	</arguments>
 		        </configuration>
 			</plugin>

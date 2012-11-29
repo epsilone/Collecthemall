@@ -1,0 +1,13 @@
+.ui-widget {
+    font-size: 1.0em;
+}
+
+.response_header { 
+    margin: 0; 
+    padding: 0.4em; 
+    text-align: center; 
+}
+
+#response {
+    padding: 0.4em; 
+}

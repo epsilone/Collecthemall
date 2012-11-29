@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.funcom.ccg</groupId>
-    <artifactId>ccg-client</artifactId>
+    <artifactId>ccg-html-client</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>CCGClient Maven</name>
@@ -17,9 +17,9 @@
     			<configuration>
 	      			<filesets>
 	        			<fileset>
-	          				<directory>src/com/funcom/ccg/thrift</directory>
+	          				<directory>.</directory>
 							<includes>
-					           	<include>**/*.as3</include>
+					           	<include>**/*.html</include>
 					        </includes>
 	          				<followSymlinks>false</followSymlinks>
 	        			</fileset>
@@ -39,16 +39,7 @@
 		          	</execution>
 		        </executions>
 		        <configuration>
-		          	<executable>../tools/thrift.exe</executable>
-		          	<arguments>
-		            	<argument>-v</argument>
-		            	<argument>-r</argument>
-		            	<argument>-out</argument>
-		            	<argument>src</argument>
-		            	<argument>--gen</argument>
-		            	<argument>as3</argument>
-		            	<argument>../common/all.thrift</argument>
-		          	</arguments>
+		          	<executable>generate.bat</executable>
 		        </configuration>
 			</plugin>
 		</plugins>

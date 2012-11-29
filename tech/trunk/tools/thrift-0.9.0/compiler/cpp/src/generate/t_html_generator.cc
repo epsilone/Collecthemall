@@ -337,8 +337,9 @@ void t_html_generator::generate_program() {
 
   // PN: added support for ajax_calls
   if (ajax_calls_) {
-	  assert(!program_->get_services().empty());
-	  generate_ajax(program_->get_services().at(0));
+	  if (!program_->get_services().empty()) {
+		  generate_ajax(program_->get_services().at(0));
+	  }
   }
 }
 
@@ -771,7 +772,9 @@ void t_html_generator::generate_service(t_service* tservice) {
 }
 
 void t_html_generator::generate_ajax(t_service* service) {
-	string js_fname = get_out_dir() + service->get_name() + "Service.js";
+	string out_dir = get_out_dir() + "/js/";
+	MKDIR(out_dir.c_str());
+	string js_fname = out_dir + service->get_name() + "Service.js";
 	f_out_.open(js_fname.c_str());
 	f_out_ << "$(document).ready(function() {" << endl;
 	f_out_ << "$(\"button\").button();" << endl;
