@@ -23,6 +23,8 @@
 #include <vector>
 #include <map>
 
+#include <algorithm>
+#include <iterator>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sstream>
@@ -241,12 +243,14 @@ void t_html_generator::generate_program() {
       f_out_ << "<script src=\"js/jquery.js\"></script>" <<endl;
       f_out_ << "<script src=\"js/jquery-ui.js\"></script>" <<endl;
       f_out_ << "<script src=\"js/thrift.js\"></script>" <<endl;
-      f_out_ << "<script src=\"js/transport_types.js\"></script>" <<endl;
 
 	  const std::vector<t_service*>& services = program_->get_services();
 	  if (!services.empty()) {
 		  if (services.size() == 1) {
 			  const t_service* service = services.at(0);
+			  std::ostringstream oss;
+			  std::transform(service->get_name().begin(), service->get_name().end(), std::ostream_iterator<char>(oss), tolower);
+			  f_out_ << "<script src=\"js/" << oss.str() << "_types.js\"></script>" <<endl;
 			  f_out_ << "<script src=\"js/" << service->get_name() << ".js\"></script>" <<endl;
 			  f_out_ << "<script src=\"js/" << service->get_name() << "Service.js\"></script>" <<endl;  
 		  }
