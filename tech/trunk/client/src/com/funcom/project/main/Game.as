@@ -1,5 +1,6 @@
 package com.funcom.project.main
 {
+	import com.funcom.ccg.http.AuthenticationService;
 	import com.funcom.project.controller.step.ConcurrentStepController;
 	import com.funcom.project.controller.step.event.StepControllerEvent;
 	import com.funcom.project.controller.step.StepController;
@@ -62,6 +63,7 @@ package com.funcom.project.main
 			_initStepController.addStep(7, openHudModule, null, [6]);
 			_initStepController.addStep(8, openMainModule, null, [6]);
 			_initStepController.addStep(9, openDebugModule, null, [6]);
+			_initStepController.addStep(10, authenticate, null, [9]);
 			
 			Listener.add(StepControllerEvent.ON_STEP_COMPLETED, _initStepController as IEventDispatcher, onInitStepCompleted);
 			_initStepController.start();
@@ -201,6 +203,12 @@ package com.funcom.project.main
 				Listener.remove(ModuleManagerEvent.MODULE_OPENED,_moduleManager, onDebugModuleOpened);
 				_initStepController.stepCompleted(9);
 			}
+		}
+		/*************************************************************/
+		private function authenticate():void 
+		{
+			AuthenticationService.authenticate("Kaiven", "DatPassword");
+			_initStepController.stepCompleted(10);
 		}
 		/*************************************************************/
 		
